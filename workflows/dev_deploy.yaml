@@ -11,10 +11,10 @@ jobs:
     name: Verify Branch and Deploy to Dev
     runs-on: ubuntu-latest
     steps:
-      - uses: pie/.github/actions/verify-branch-is-up-to-date@main
+      - uses: atticus7/.github/actions/verify-branch-is-up-to-date@main
         name: Verify Branch is up to date
-      
-      - uses: pie/.github/actions/add-ssh-key@main
+
+      - uses: atticus7/.github/actions/add-ssh-key@main
         name: Add SSH Key to this runner
         with:
           ssh-port: ${{vars.SSH_PORT}}
@@ -22,10 +22,9 @@ jobs:
           ssh-key: ${{secrets.SSH_PRIVATE_KEY}}
 
       - name: RSync to the Development Site
-        uses: pie/.github/actions/deploy-via-rsync@main
-        with: 
+        uses: atticus7/.github/actions/deploy-via-rsync@main
+        with:
           ssh-port: ${{vars.SSH_PORT}}
           ssh-host: ${{vars.SSH_HOST}}
           ssh-user: ${{vars.SSH_USER}}
           destination-path: ${{vars.SSH_DEV_DIR}}
-          
