@@ -2,6 +2,7 @@
 
 PLUGINS_JSON_FILE=$1
 
-cat "${PLUGINS_JSON_FILE}" | json -c 'this.type == "composer"'
+composer_plugins=`cat "${PLUGINS_JSON_FILE}" | json -c 'this.type == "composer"'`
+echo "${composer_plugins}"
 
 
