@@ -2,8 +2,6 @@
 
 PLUGINS_JSON_FILE=$1
 
-
-json=$(<"${PLUGINS_JSON_FILE}")  
-echo "$json" | json -c 'this.type = "composer"'
+cat "${PLUGINS_JSON_FILE}" | json -c 'this.type == "composer"'
 
 
