@@ -1,0 +1,12 @@
+name: "Parse Json"
+description: "filter json array"
+inputs:
+  plugins_json_file: # id of input
+    description: "The Plugins Json File"
+    required: true
+    default: "plugins.json"
+runs:
+  using: "composite"
+  steps:
+    - run: cat ${{ inputs.plugins_json_file }}.
+      shell: bash
