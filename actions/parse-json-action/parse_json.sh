@@ -6,8 +6,9 @@ composer_plugins=`cat "${PLUGINS_JSON_FILE}" | json -c 'this.type == "composer"'
 #echo "${composer_plugins}"
 
 
-jq -c '.[]' composer_plugins | while read i; do
-    echo $i
+for k in $(jq '. | keys | .[]' <<< "$composer_plugins"); do
+    name=$(jq -r ".[$k]" <<< "$composer_plugins");
+    echo $name;
 done
 
 
