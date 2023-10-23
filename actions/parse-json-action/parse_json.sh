@@ -3,6 +3,12 @@
 PLUGINS_JSON_FILE=$1
 
 composer_plugins=`cat "${PLUGINS_JSON_FILE}" | json -c 'this.type == "composer"'`
-echo "${composer_plugins}"
+#echo "${composer_plugins}"
+
+
+jq -c '.[]' composer_plugins | while read i; do
+    echo $i
+done
+
 
 
