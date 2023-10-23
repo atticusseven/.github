@@ -8,5 +8,5 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: ./parse_json.sh ${{github.workspace}}/${{ inputs.plugins_json_file }}
+    - run: parse_json.sh ${{github.workspace}}/${{ inputs.plugins_json_file }}
       shell: bash
