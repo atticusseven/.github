@@ -8,5 +8,5 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: cat ${{ inputs.plugins_json_file }}.
+    - run: cat ${{github.workspace}}/${{ inputs.plugins_json_file }}.
       shell: bash
