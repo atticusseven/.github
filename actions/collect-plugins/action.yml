@@ -5,9 +5,15 @@ inputs:
     description: "Who to greet"
     required: true
     default: "World"
+  workspace:
+    description: "Path to the Github Workspace / repo root"
+    default: ${{github.workspace}}
   plugins_dir:
     description: "The Plugins Directory"
-    default: "${{github.workspace}}/html/content/plugins"
+    default: "/html/content/plugins"
+  json_filename:
+    description: "The name of the json file that will be output"
+    default: "plugins.json"
 
 outputs:
   time: # id of output

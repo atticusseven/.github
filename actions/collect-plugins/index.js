@@ -2,8 +2,11 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 const fs = require("fs");
 
-const plugins_dir = core.getInput("plugins_dir");
+const workspace = core.getInput("workspace");
+const plugins_dir = workspace + "/" + core.getInput("plugins_dir");
+const plugins_json = workspace + "/" + core.getInput("json_filename");
 console.log(plugins_dir);
+console.log(plugins_json);
 
 // try {
 //   // `who-to-greet` input defined in action metadata file
