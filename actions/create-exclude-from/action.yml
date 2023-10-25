@@ -1,0 +1,19 @@
+name: "Create exclude-from file"
+description: "dynamically create exclude-from file for rsync - prevents transfer of excluded files from source and deletion of excluded files on destination"
+inputs:
+  plugins_json_file: # id of input
+    description: "The Plugins Json File"
+    required: true
+    default: "plugins.json"
+  exclude_file: # id of input
+    description: "txt file for excluded files"
+    required: true
+    default: "exclude.txt"
+
+runs:
+  using: "composite"
+  steps:
+    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
+    - run: create-exclude-from.sh ${{github.workspace}}/${{ inputs.plugins_json_file }} ${{github.workspace}}/${{ inputs.exclude_file }}
+      shell: bash

@@ -7,7 +7,7 @@ inputs:
   ssh-port:
     description: "SSH port to use"
     required: false
-    default: 22
+    default: "22"
   ssh-user:
     description: "SSH user to connect"
     required: true
@@ -20,7 +20,7 @@ runs:
   steps:
     - name: Check out the Repo
       uses: actions/checkout@v3
-    
+
     - name: Rsync to the remote
       run: rsync -avPC --no-perms --delete-after -e 'ssh -i /home/runner/.ssh/github_actions -p ${{inputs.ssh-port}}' . ${{inputs.ssh-user}}@${{inputs.ssh-host}}:${{inputs.destination-path}}
       shell: bash

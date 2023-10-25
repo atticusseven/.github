@@ -1,0 +1,27 @@
+name: "Manage Plugins"
+description: "installs, activates, updates, deactivates and removes plugins"
+inputs:
+  plugins_json_file: # id of input
+    description: "The Plugins Json File"
+    required: true
+    default: "plugins.json"
+  ssh-host:
+    description: "SSH host to use"
+    required: true
+  ssh-port:
+    description: "SSH port to use"
+    required: false
+    default: "22"
+  ssh-user:
+    description: "SSH user to connect"
+    required: true
+  destination-path:
+    description: "Destination path to copy files"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
+    - run: manage-plugins.sh ${{github.workspace}}/${{ inputs.plugins_json_file }} ${{inputs.ssh-user}} ${{inputs.ssh-host}} ${{inputs.destination-path}}
+      shell: bash
