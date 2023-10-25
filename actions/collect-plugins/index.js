@@ -2,29 +2,14 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 const fs = require("fs");
 
-const workspace = core.getInput("workspace");
-const plugins_dir = workspace + "/" + core.getInput("plugins_dir");
-const plugins_json = workspace + "/" + core.getInput("json_filename");
-console.log(plugins_dir);
-console.log(plugins_json);
-
-// try {
-//   // `who-to-greet` input defined in action metadata file
-//   const nameToGreet = core.getInput("who-to-greet");
-//   console.log(`Hello ${nameToGreet}!`);
-//   const time = new Date().toTimeString();
-//   core.setOutput("time", time);
-//   // Get the JSON webhook payload for the event that triggered the workflow
-//   const payload = JSON.stringify(github.context.payload, undefined, 2);
-//   console.log(`The event payload: ${payload}`);
-// } catch (error) {
-//   core.setFailed(error.message);
-// }
-/*
 try {
-  const plugins_dir = "html/content/plugins";
-  const premium_plugins_dir = "premium-plugins";
-  const composer_json_file = "html/composer.json";
+  const workspace = core.getInput("workspace");
+  const plugins_dir = workspace + "/" + core.getInput("plugins_dir");
+  const plugins_json = workspace + "/" + core.getInput("json_filename");
+
+  //const plugins_dir = "html/content/plugins";
+  const premium_plugins_dir = workspace + "/" + "premium-plugins";
+  const composer_json_file = workspace + "/" + "html/composer.json";
   // get the directory contents
   const plugins = fs.readdirSync(plugins_dir);
   const premium_plugins = fs
@@ -70,7 +55,7 @@ try {
   json = JSON.stringify(plugins);
   //console.log(json);
 
-  fs.writeFile("plugins.json", json, (err) => {
+  fs.writeFile(plugins_json, json, (err) => {
     // Checking for errors
     if (err) throw err;
 
@@ -79,4 +64,3 @@ try {
 } catch (error) {
   core.setFailed(error.message);
 }
-*/
