@@ -1,7 +1,7 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
 
-console.log(github.workspace);
+console.log(core);
 
 try {
   // `who-to-greet` input defined in action metadata file
