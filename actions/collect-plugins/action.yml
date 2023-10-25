@@ -1,10 +1,17 @@
-name: "Hello World"
-description: "Greet someone and record the time"
+name: "Collect Plugins"
+description: "Scan all plugins, categories by 'free', 'premium', 'custom' and 'composer' and output a json file"
 inputs:
   who-to-greet: # id of input
     description: "Who to greet"
     required: true
     default: "World"
+  plugins_dir_override:
+    description: The Plugins Directory
+    default: "html/content/plugins"
+  plugins_dir:
+    description: The Plugins Directory
+    default: ${{github.workspace}}/${{ inputs.plugins_dir_override }}
+
 outputs:
   time: # id of output
     description: "The time we greeted you"
