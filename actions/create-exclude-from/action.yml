@@ -15,5 +15,5 @@ runs:
   steps:
     - run: |
         echo "${{ github.action_path }}" >> $GITHUB_PATH
-        create-exclude-from.sh ${{github.workspace}}/${{ inputs.plugins_json_file }} ${{github.workspace}}/${{ inputs.exclude_file }}
+        create-exclude-from.sh ${{runner.workspace}}/${{ inputs.plugins_json_file }} ${{runner.workspace}}/${{ inputs.exclude_file }}
       shell: bash
