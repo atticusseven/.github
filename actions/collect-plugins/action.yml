@@ -3,7 +3,7 @@ description: "Scan all plugins, categories by 'free', 'premium', 'custom' and 'c
 inputs:
   workspace:
     description: "Path to the Github Workspace / repo root"
-    default: ${{runner.workspace}}
+    default: ${{github.workspace}}
   plugins_dir:
     description: "The Plugins Directory"
     default: "/html/content/plugins"

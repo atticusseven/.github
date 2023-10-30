@@ -33,4 +33,4 @@ runs:
     - name: Install composer dependencies
       uses: ramsey/composer-install@v2
       with:
-        working-directory: ${{runner.workspace}}/html
+        working-directory: ${{github.workspace}}/html
