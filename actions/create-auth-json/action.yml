@@ -1,0 +1,25 @@
+name: "Create auth.json"
+description: "Create auth.json for composer install using repo secrets for tokens"
+inputs:
+  workspace:
+    description: "Path to the Github Workspace / repo root"
+    default: ${{github.workspace}}
+  root_dir:
+    description: "The Plugins Directory"
+    default: "html"
+  json_filename:
+    description: "The name of the json file that will be output"
+    default: "auth.json"
+  site_url:
+    description: the website's URL
+    required: true
+  acf_licence_key:
+    description: location of the conf directory
+    required: true
+  ac_token:
+    description: location of the conf directory
+    required: true
+
+runs:
+  using: "node20"
+  main: "index.js"

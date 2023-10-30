@@ -1,0 +1,40 @@
+name: Compile, Minify & Combine JS and CSS
+description: delete .scss files in the theme, after css has been compiled
+inputs:
+  theme_dir:
+    description: The Theme Directory
+    required: true
+    default: html/content/themes/aseven
+  content_dir:
+    description: The Content Directory
+    required: true
+    default: html/content
+
+runs:
+  using: composite
+  steps:
+    - name: Compile CSS from SCSS files
+      uses: gha-utilities/sass-build@v0.5.1
+      with:
+        source: ${{github.workspace}}/${{ inputs.theme_dir }}/library/css/styles.scss
+        destination: ${{github.workspace}}/${{ inputs.theme_dir }}}/library/css/styles.css
+    - name: Clean up .scss files
+      run: |
+        rm ${{github.workspace}}/${{ inputs.theme_dir }}/library/css/*.scss
+        rm -rf ${{github.workspace}}/${{ inputs.theme_dir }}/library/css/import
+      shell: bash
+    - name: PostCSS autoprefixer
+      run: postcss -u autoprefixer --autoprefixer.browsers "> 5%" -o ${{github.workspace}}/${{ inputs.theme_dir }}/library/css/styles.css ${{github.workspace}}/${{ inputs.theme_dir }}/library/css/styles.css
+      shell: bash
+    - name: Remove console commands
+      uses: jacobtomlinson/gha-find-replace@v3
+      with:
+        find: 'console\.(info|log)\(([^)]+)\)'
+        replace: " "
+        include: "**/*.js"
+        regex: true
+    - name: Minify JS and CSS
+      uses: nizarmah/auto-minify@v2.1
+      with:
+        overwrite: true
+        directory: ${{github.workspace}}/${{ inputs.content_dir }}

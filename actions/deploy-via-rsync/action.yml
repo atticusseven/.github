@@ -22,6 +22,6 @@ runs:
       uses: actions/checkout@v3
 
     - name: Rsync to the remote
-      run: rsync -avPC --no-perms --delete-after -e 'ssh -i /home/runner/.ssh/github_actions -p ${{inputs.ssh-port}}' . ${{inputs.ssh-user}}@${{inputs.ssh-host}}:${{inputs.destination-path}}
+      run: rsync -avPC --no-perms --delete-after  --no-perms --exclude-from='${{github.workspace}}/exclude.txt' -e 'ssh -i /home/runner/.ssh/github_actions -p ${{inputs.ssh-port}}' . ${{inputs.ssh-user}}@${{inputs.ssh-host}}:${{inputs.destination-path}}
       #run: rsync -avPC --delete --no-perms --exclude-from='exclude-file.txt' -e 'ssh -i /home/runner/.ssh/github-actions' . ${{ vars.SSH_USER }}@${{ vars.SSH_HOST }}:${{vars.SSH_DEV_DIR }}
       shell: bash

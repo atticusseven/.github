@@ -1,0 +1,36 @@
+name: Install Composer Dependencies
+description: Run composer install to install Wordpress and and other dependencies. Insert tokens from repo inputs required for premium dependencies
+inputs:
+  root_dir:
+    description: location of the site root directory
+    required: true
+    default: html
+  site_url:
+    description: the website's URL
+    required: true
+  acf_licence_key:
+    description: ACF Pro Licence Key
+    required: true
+  ac_token:
+    description: Admin Columns Pro token
+    required: true
+  yoast_seo_token:
+    description: Yoast SEO Premium token
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Create auth.json
+      uses: atticusseven/.github/actions/create-auth-json@main
+      with:
+        acf_licence_key: ${{inputs.acf_licence}}
+        ac_token: ${{inputs.ac_token}}
+        site_url: ${{inputs.site_url}}
+    - name: Register Yoast SEO token with composer
+      run: composer config -g http-basic.my.yoast.com token ${{ inputs.yoast_seo_token }}
+      shell: bash
+    - name: Install composer dependencies
+      uses: ramsey/composer-install@v2
+      with:
+        working-directory: ${{github.workspace}}/html

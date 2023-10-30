@@ -1,0 +1,33 @@
+name: Create .env from template.env
+description: Replace placeholders with repo variables / secrets and output .env
+inputs:
+  conf_dir:
+    description: location of the conf directory
+    required: true
+    default: conf
+  db_name: # id of input
+    description: the database name
+    required: true
+  db_user: # id of input
+    description: the database user
+    required: true
+  db_password: # id of input
+    description: the database password
+    required: true
+  db_prefix: # id of input
+    description: the database table prefix
+    required: true
+    default: wp_
+  network_ip:
+    description: the network ip address
+    required: true
+    default: undefined
+
+runs:
+  using: composite
+  steps:
+    - name: do something
+      run: |
+        cd conf
+        sed -e "s|@@@DB_NAME@@@|${{ inputs.db_name }}_dev|" -e "s|@@@DB_USER@@@|${{ inputs.db_user }}|" -e "s|@@@DB_PASSWORD@@@|${{ secrets.db_password }}|" -e "s|@@@DB_PREFIX@@@|${{ inputs.db_prefix }}|" -e "s|@@@NETWORK_IP@@@|{{inputs.network_ip}}|" ${{github.workspace}}/{{inputs.conf_dir}}/template.env > ${{github.workspace}}/{{inputs.conf_dir}}/.env
+      shell: bash
