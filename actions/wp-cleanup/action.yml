@@ -8,8 +8,8 @@ inputs:
     description: "SSH port to use"
     required: false
     default: "22"
-  ssh-key:
-    description: "SSH key to add"
+  ssh-user:
+    description: "SSH user to connect"
     required: true
   destination-path:
     description: "Destination path on the target server"
