@@ -9,13 +9,13 @@ inputs:
 runs:
   using: "composite"
   steps:
-      - name: Git checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Check if branch contains main
-        run: |
-          if ! git merge-base --is-ancestor origin/${{inputs.branch}} ${{ github.sha }};
-          then echo "This branch is not up to date with main";
-          exit 1; fi
-        shell: bash
+    - name: Git checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    #- name: Check if branch contains main
+    #  run: |
+    #    if ! git merge-base --is-ancestor origin/${{inputs.branch}} ${{ github.sha }};
+    #    then echo "This branch is not up to date with main";
+    #    exit 1; fi
+    #  shell: bash

@@ -31,9 +31,9 @@ runs:
         chmod +x wp-cli.phar
         sudo mv wp-cli.phar /usr/local/bin/wp
         wp --info
-        touch ${{runner.workspace}}/${{inputs.root_dir}}/wp-cl.yml
+        touch ${{runner.workspace}}/${{inputs.root_dir}}/wp-cli.yml
       shell: bash
     - name: Set up wp-cli.yml
       uses: mikefarah/yq@master
       with:
-        cmd: yq e '.url = "{{inputs.site_url}}"' -i ${{runner.workspace}}/${{inputs.root_dir}}/wp-cl.yml; yq e '.path = "wp"' -i ${{runner.workspace}}/${{inputs.root_dir}}/wp-cl.yml
+        cmd: yq e '.url = "{{inputs.site_url}}"' -i ${{runner.workspace}}/${{inputs.root_dir}}/wp-cli.yml; yq e '.path = "wp"' -i ${{runner.workspace}}/${{inputs.root_dir}}/wp-cli.yml
