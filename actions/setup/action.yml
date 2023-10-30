@@ -31,7 +31,7 @@ runs:
         chmod +x wp-cli.phar
         sudo mv wp-cli.phar /usr/local/bin/wp
         wp --info
-        touch ${{github.workspace}}/{{inputs.root_dir}}/wp-cl.yml
+        touch ${{github.workspace}}/${{inputs.root_dir}}/wp-cl.yml
       shell: bash
     - name: Set up wp-cli.yml
       uses: mikefarah/yq@master
