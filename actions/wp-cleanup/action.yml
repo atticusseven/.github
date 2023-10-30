@@ -20,7 +20,7 @@ runs:
   steps:
     - run: |
         wp package install wp-media/wp-rocket-cli:trunk
-        wp cache flush --path=html/wp --skip-plugins --skip-themes --ssh="${{ inputs.ssh-user }}"@"${{ inputs.ssh-host   }}":"${{ inputs.destination-path }}"
+        wp cache flush --path=html/wp --skip-plugins --skip-themes --ssh="${{ inputs.ssh-user }}"@"${{ inputs.ssh-host }}":"${{ inputs.destination-path }}"
         wp rewrite flush --path=html/wp --skip-plugins --skip-themes --ssh="${{ inputs.ssh-user }}"@"${{ inputs.ssh-host }}":"${{ inputs.destination-path }}"
         wp rocket clean --confirm --path=html/wp --skip-plugins --skip-themes --ssh="${{ inputs.ssh-user }}"@"${{ inputs.ssh-host }}":"${{ inputs.destination-path }}"
       shell: bash
