@@ -4,7 +4,9 @@ const fs = require("fs");
 
 try {
   const workspace = core.getInput("workspace");
-  const auth_json_filename = workspace + "/" + core.getInput("json_filename");
+  const root_dir = core.getInput("root_dir");
+  const json_file_name = core.getInput("json_filename");
+  const auth_json_file_path = workspace + "/" + root_dir + "/" + json_file_name;
 
   const auth_json = {
     "http-basic": {
@@ -21,7 +23,7 @@ try {
   const auth_json_string = JSON.stringify(auth_json);
   //console.log(json);
 
-  fs.writeFile(auth_json_filename, auth_json_string, (err) => {
+  fs.writeFile(auth_json_file_path, auth_json_string, (err) => {
     // Checking for errors
     if (err) throw err;
 
