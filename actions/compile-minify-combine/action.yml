@@ -17,7 +17,7 @@ runs:
       uses: gha-utilities/sass-build@v0.5.1
       with:
         source: ${{github.workspace}}/${{ inputs.theme_dir }}/library/css/styles.scss
-        destination: ${{github.workspace}}/${{ inputs.theme_dir }}}/library/css/styles.css
+        destination: ${{github.workspace}}/${{ inputs.theme_dir }}/library/css/styles.css
     - name: Clean up .scss files
       run: |
         rm ${{github.workspace}}/${{ inputs.theme_dir }}/library/css/*.scss
