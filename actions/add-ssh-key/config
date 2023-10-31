@@ -1,5 +1,0 @@
-Host server
-    HostName 159.65.24.66
-    User forge
-    Port 22
-    IdentityFile /home/runner/.ssh/github_actions
