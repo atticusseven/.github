@@ -37,6 +37,7 @@ runs:
     - name: Set up wp-cli.yml
       uses: mikefarah/yq@master
       with:
-        cmd: yq -i '.url = "${{inputs.site_url}}"' ${{github.workspace}}/${{inputs.root_dir}}/wp-cli.yml
+        cmd: yq -i '.url = "${{inputs.site_url}}"' wp-cli.yml
+        working-directory: ${{github.workspace}}/${{inputs.root_dir}}
         #cmd: yq -i '.path = "wp"' ${{github.workspace}}/${{inputs.root_dir}}/wp-cli.yml
 #yq -i '.foo.bar = "cool"' 'config.yml'
