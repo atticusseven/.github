@@ -24,7 +24,7 @@ runs:
     - name: Create auth.json
       uses: atticusseven/.github/actions/create-auth-json@main
       with:
-        acf_licence_key: ${{inputs.acf_licence}}
+        acf_licence_key: ${{inputs.acf_licence_key}}
         ac_token: ${{inputs.ac_token}}
         site_url: ${{inputs.site_url}}
     - name: Output auth.json
