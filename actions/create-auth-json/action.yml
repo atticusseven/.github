@@ -14,10 +14,10 @@ inputs:
     description: the website's URL
     required: true
   acf_licence_key:
-    description: location of the conf directory
+    description: ACF Licence Key
     required: true
   ac_token:
-    description: location of the conf directory
+    description: AC Token
     required: true
 
 runs:
