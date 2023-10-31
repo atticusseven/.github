@@ -18,10 +18,10 @@ try {
     },
   };
 
-  auth_json = JSON.stringify(auth_json);
+  const auth_json_string = JSON.stringify(auth_json);
   //console.log(json);
 
-  fs.writeFile(auth_json_filename, auth_json, (err) => {
+  fs.writeFile(auth_json_filename, auth_json_string, (err) => {
     // Checking for errors
     if (err) throw err;
 
