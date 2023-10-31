@@ -37,6 +37,6 @@ runs:
       shell: bash
     - name: Set up wp-cli.yml
       run: |
-        yq e '.url = "${{inputs.site_url}}"' -i ${{github.workspace}}/${{inputs.root_dir}}/wp-cli.yml; yq e '.path = "wp"' -i ${{github.workspace}}/${{inputs.root_dir}}/wp-cli.yml
+        yq -i '.url = "${{inputs.site_url}}"' ${{github.workspace}}/${{inputs.root_dir}}/wp-cli.yml; yq -i '.path = "wp"' ${{github.workspace}}/${{inputs.root_dir}}/wp-cli.yml
         cat ${{github.workspace}}/${{inputs.root_dir}}/wp-cli.yml
       shell: bash
