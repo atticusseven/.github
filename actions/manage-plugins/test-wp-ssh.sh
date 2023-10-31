@@ -9,7 +9,7 @@ wp_cli_default_params="--skip-plugins --skip-themes --ssh=${SSH_USER}@${SSH_HOST
 
 echo "${wp_cli_default_params}"
 #wp --info
-#wp plugin list "${wp_cli_default_params}"
+wp plugin list "${wp_cli_default_params}"
 
 
 
