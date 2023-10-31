@@ -5,9 +5,9 @@ SSH_DESTINATION_DIR=$2
 
 wp_cli_default_params="--skip-plugins --skip-themes --ssh=server:${SSH_DESTINATION_DIR}/html/wp"
 
-#echo "${wp_cli_default_params}"
+echo "${wp_cli_default_params}"
 #wp --info
-wp plugin list --skip-plugins --skip-themes --ssh=server:"${SSH_DESTINATION_DIR}"/html/wp
+wp plugin list "${wp_cli_default_params}"
 
 
 
