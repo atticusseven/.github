@@ -22,4 +22,5 @@ runs:
         chmod 600 /home/runner/.ssh/github_actions
         eval "$(ssh-agent -a /tmp/ssh_agent.sock)"
         ssh-add /home/runner/.ssh/github_actions
+        mv config /home/runner/.ssh/config
       shell: bash
