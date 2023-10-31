@@ -26,5 +26,6 @@ runs:
       shell: bash
     #- run: manage-plugins.sh ${{github.workspace}}/${{ inputs.plugins_json_file }} ${{inputs.ssh-user}} ${{inputs.ssh-host}} ${{inputs.destination-path}}
     #- run: test-wp-ssh.sh ${{github.workspace}}/${{ inputs.plugins_json_file }} ${{inputs.ssh-user}} ${{inputs.ssh-host}} ${{inputs.destination-path}}
-    - run: wp plugin list --skip-plugins --skip-themes --ssh=forge@159.65.24.66:/mnt/falo/sites/dev/dev.findalondonoffice.co.uk/html/wp
+    #- run: wp plugin list --skip-plugins --skip-themes --ssh=forge@159.65.24.66:/mnt/falo/sites/dev/dev.findalondonoffice.co.uk/html/wp
+    - run: ls -la ~/.ssh
       shell: bash
