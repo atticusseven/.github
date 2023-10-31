@@ -27,6 +27,9 @@ runs:
         acf_licence_key: ${{inputs.acf_licence}}
         ac_token: ${{inputs.ac_token}}
         site_url: ${{inputs.site_url}}
+    - name: Output auth.json
+      run: cat ${{github.workspace}}/html/auth.json
+      shell: bash
     - name: Register Yoast SEO token with composer
       run: composer config -g http-basic.my.yoast.com token ${{ inputs.yoast_seo_token }}
       shell: bash
