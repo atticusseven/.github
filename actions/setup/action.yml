@@ -12,32 +12,23 @@ inputs:
 runs:
   using: composite
   steps:
-    # - name: Install Node
-    #   uses: actions/setup-node@v3
-    #   with:
-    #     node-version: 18
-    # - name: Install PostCSS, PostCSS CLI and Autoprefixer
-    #   run: npm i -D --global postcss postcss-cli autoprefixer
-    #   shell: bash
-    # - name: Install json (npm package)
-    #   run: npm install -g json
-    #   shell: bash
-    # - name: Install jq (for bash)
-    #   run: sudo apt-get install jq
-    #   shell: bash
+    - name: Install Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+    - name: Install PostCSS, PostCSS CLI and Autoprefixer
+      run: npm i -D --global postcss postcss-cli autoprefixer
+      shell: bash
+    - name: Install json (npm package)
+      run: npm install -g json
+      shell: bash
+    - name: Install jq (for bash)
+      run: sudo apt-get install jq
+      shell: bash
     - name: Install WP-CLI
       run: |
         curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
         chmod +x wp-cli.phar
         sudo mv wp-cli.phar /usr/local/bin/wp
         wp --info
-        touch ${{github.workspace}}/${{inputs.root_dir}}/wp-cli.yml
-        ls -la ${{ github.workspace }}/${{inputs.root_dir}}
-        cd ${{ github.workspace }}/${{inputs.root_dir}}
       shell: bash
-    - name: Set up wp-cli.yml
-      uses: mikefarah/yq@master
-      with:
-        cmd: yq -i '.url = "${{inputs.site_url}}"' wp-cli.yml
-        #cmd: yq -i '.path = "wp"' ${{github.workspace}}/${{inputs.root_dir}}/wp-cli.yml
-#yq -i '.foo.bar = "cool"' 'config.yml'
