@@ -12,6 +12,7 @@ inputs:
 runs:
   using: composite
   steps:
+    - uses: chrisdickinson/setup-yq@latest
     # - name: Install Node
     #   uses: actions/setup-node@v3
     #   with:
@@ -35,8 +36,7 @@ runs:
         ls -la ${{ github.workspace }}/${{inputs.root_dir}}
       shell: bash
     - name: Set up wp-cli.yml
-      uses: chrisdickinson/setup-yq@latest
-      run: |
-        yq --help
+      run: yq --help
+      shell: bash
       # with:
       #   cmd: yq e '.url = "${{inputs.site_url}}"' -i ${{github.workspace}}/${{inputs.root_dir}}/wp-cli.yml; yq e '.path = "wp"' -i ${{github.workspace}}/${{inputs.root_dir}}/wp-cli.yml
