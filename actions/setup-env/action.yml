@@ -29,5 +29,5 @@ runs:
     - name: do something
       run: |
         cd conf
-        sed -e "s|@@@DB_NAME@@@|${{ inputs.db_name }}_dev|" -e "s|@@@DB_USER@@@|${{ inputs.db_user }}|" -e "s|@@@DB_PASSWORD@@@|${{ secrets.db_password }}|" -e "s|@@@DB_PREFIX@@@|${{ inputs.db_prefix }}|" -e "s|@@@NETWORK_IP@@@|{{inputs.network_ip}}|" ${{github.workspace}}/{{inputs.conf_dir}}/template.env > ${{github.workspace}}/{{inputs.conf_dir}}/.env
+        sed -e "s|@@@DB_NAME@@@|${{ inputs.db_name }}_dev|" -e "s|@@@DB_USER@@@|${{ inputs.db_user }}|" -e "s|@@@DB_PASSWORD@@@|${{ inputs.db_password }}|" -e "s|@@@DB_PREFIX@@@|${{ inputs.db_prefix }}|" -e "s|@@@NETWORK_IP@@@|{{inputs.network_ip}}|" ${{github.workspace}}/{{inputs.conf_dir}}/template.env > ${{github.workspace}}/{{inputs.conf_dir}}/.env
       shell: bash
