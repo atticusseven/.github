@@ -1,5 +1,5 @@
 name: "Deploy via Rsync"
-description: "Adds our private SSH key to the workflow runner so that it can access the remote server"
+description: ""
 inputs:
   ssh-host:
     description: "SSH host to use"
@@ -18,8 +18,8 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Check out the Repo
-      uses: actions/checkout@v3
+    # - name: Check out the Repo
+    #   uses: actions/checkout@v3
 
     - name: Rsync to the remote
       run: rsync -avPC --no-perms --delete-after  --no-perms --exclude-from='${{github.workspace}}/exclude.txt' -e 'ssh -i /home/runner/.ssh/github_actions -p ${{inputs.ssh-port}}' . ${{inputs.ssh-user}}@${{inputs.ssh-host}}:${{inputs.destination-path}}
