@@ -6,7 +6,7 @@ inputs:
     default: ${{github.workspace}}
   plugins_dir:
     description: "The Plugins Directory"
-    default: "/html/content/plugins"
+    default: "html/content/plugins"
   json_filename:
     description: "The name of the json file that will be output"
     default: "plugins.json"

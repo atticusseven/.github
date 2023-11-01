@@ -11,8 +11,6 @@ plugins=`cat "${PLUGINS_JSON_FILE}" | json`
 #existing plugins
 live_plugins=`echo wp plugin list --field=name --status=active,inactive "${wp_cli_default_params}" | bash`
 
-echo $live_plugins
-
 activate_plugin() {
   plugin=$1
   if ! echo wp plugin is-active "${plugin}" "${wp_cli_default_params}" | bash ; then
