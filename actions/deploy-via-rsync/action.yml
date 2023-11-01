@@ -9,5 +9,5 @@ runs:
   using: "composite"
   steps:
     - name: Rsync to the remote
-      run: rsync -avPC --no-perms --delete-after  --no-perms --exclude-from='${{github.workspace}}/exclude.txt' -e 'ssh server:${{inputs.destination-path}}
+      run: rsync -avPC --no-perms --delete-after  --no-perms --exclude-from='${{github.workspace}}/exclude.txt' -e 'ssh server:${{inputs.destination-path}}'
       shell: bash
