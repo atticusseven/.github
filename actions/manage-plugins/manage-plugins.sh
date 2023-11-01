@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 
 PLUGINS_JSON_FILE=$1
-SSH_USER=$2
-SSH_HOST=$3
-SSH_DESTINATION_DIR=$4
+SSH_DESTINATION_DIR=$2
 
-wp_cli_default_params="--skip-plugins --skip-themes --ssh=${SSH_USER}@${SSH_HOST}:${SSH_DESTINATION_DIR}/html/wp"
+wp_cli_default_params="--skip-plugins --skip-themes --ssh=server:${SSH_DESTINATION_DIR}/html/wp"
 
 #free plugins need installing and activating
 plugins=`cat "${PLUGINS_JSON_FILE}" | json`
@@ -13,12 +11,13 @@ plugins=`cat "${PLUGINS_JSON_FILE}" | json`
 #existing plugins
 live_plugins=`wp plugin list --field=name --status=active,inactive "${wp_cli_default_params}"`
 
+echo $live_plugins
 
 activate_plugin() {
   plugin=$1
-  if ! wp plugin is-active "${plugin}" "${wp_cli_default_params}" ; then
+  if ! echo wp plugin is-active "${plugin}" "${wp_cli_default_params}" | bash ; then
       echo " * Activating the ${plugin} plugin"
-      wp plugin activate "${plugin}" "${wp_cli_default_params}"
+      echo wp plugin activate "${plugin}" "${wp_cli_default_params}" | bash
   else
     echo " * The ${plugin} plugin is already active."
   fi
@@ -26,13 +25,13 @@ activate_plugin() {
 
 install_plugin() {
   plugin=$1
-  if wp plugin is-installed "${plugin}" "${wp_cli_default_params}" ; then
+  if echo wp plugin is-installed "${plugin}" "${wp_cli_default_params}" | bash ; then
     echo " * The ${plugin} plugin is already installed."
-    wp plugin update "${plugin}" "${wp_cli_default_params}"
+    echo wp plugin update "${plugin}" "${wp_cli_default_params}" | bash
     activate_plugin "${plugin}"
   else
     echo " * Installing and activating plugin: '${plugin}'"
-    wp plugin install "${plugin}" --activate "${wp_cli_default_params}"
+    echo wp plugin install "${plugin}" --activate "${wp_cli_default_params}" | bash
   fi
 }
 
@@ -40,7 +39,7 @@ install_activate_premium_plugin() {
     plugin=$1
     #always overwite to ensure the correct version is installed
     echo " * Installing and activating the ${plugin} plugin"
-    wp plugin install premium-plugins/"${plugin}".zip --activate --force "${wp_cli_default_params}"
+    echo wp plugin install premium-plugins/"${plugin}".zip --activate --force "${wp_cli_default_params}" | bash
 }
 
 maybe_delete_plugin() {
@@ -54,9 +53,9 @@ maybe_delete_plugin() {
     then
         #if it a live plugin is not in our defined plugin list, then deactivate it and delete it
         echo " * Deactivating the ${live_plugin} plugin"
-        wp plugin deactivate "${plugin}" "${wp_cli_default_params}"
+        echo wp plugin deactivate "${plugin}" "${wp_cli_default_params}" | bash
         echo " * Deleting the ${plugin} plugin"
-        php wp-cli.phar plugin delete "${plugin}" "${wp_cli_default_params}"
+        echo wp plugin delete "${plugin}" "${wp_cli_default_params}" | bash
   fi
 
 }
@@ -84,6 +83,7 @@ done
 #clean up
 # remove premium plugins directory from destination server
 ssh -i /home/runner/.ssh/github_actions "${SSH_USER}"@"${SSH_HOST}" "rm -rf ${SSH_DESTINATION_DIR}/premium-plugins"
+echo $?
 
 
 
