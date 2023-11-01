@@ -9,7 +9,7 @@ wp_cli_default_params="--skip-plugins --skip-themes --ssh=server:${SSH_DESTINATI
 plugins=`cat "${PLUGINS_JSON_FILE}" | json`
 
 #existing plugins
-live_plugins=`wp plugin list --field=name --status=active,inactive "${wp_cli_default_params}"`
+live_plugins=`echo wp plugin list --field=name --status=active,inactive "${wp_cli_default_params}" | bash`
 
 echo $live_plugins
 

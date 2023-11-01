@@ -10,7 +10,7 @@ runs:
   steps:
     - run: |
         wp package install wp-media/wp-rocket-cli:trunk
-        wp cache flush --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}/path=html/wp
-        wp rewrite flush --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}/path=html/wp
-        wp rocket clean --confirm --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}/path=html/wp
+        wp cache flush --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}/html/wp
+        wp rewrite flush --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}/html/wp
+        wp rocket clean --confirm --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}/html/wp
       shell: bash
