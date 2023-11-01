@@ -1,16 +1,6 @@
 name: "WP Clean Up"
 description: "Adds our private SSH key to the workflow runner so that it can access the remote server"
 inputs:
-  ssh-host:
-    description: "SSH host to use"
-    required: true
-  ssh-port:
-    description: "SSH port to use"
-    required: false
-    default: "22"
-  ssh-user:
-    description: "SSH user to connect"
-    required: true
   destination-path:
     description: "Destination path on the target server"
     required: true
@@ -20,7 +10,7 @@ runs:
   steps:
     - run: |
         wp package install wp-media/wp-rocket-cli:trunk
-        wp cache flush --skip-plugins --skip-themes --ssh="${{ inputs.ssh-user }}"@"${{ inputs.ssh-host }}":"${{ inputs.destination-path }}"/path=html/wp
-        wp rewrite flush --skip-plugins --skip-themes --ssh="${{ inputs.ssh-user }}"@"${{ inputs.ssh-host }}":"${{ inputs.destination-path }}"/path=html/wp
-        wp rocket clean --confirm --skip-plugins --skip-themes --ssh="${{ inputs.ssh-user }}"@"${{ inputs.ssh-host }}":"${{ inputs.destination-path }}"/path=html/wp
+        wp cache flush --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}/path=html/wp
+        wp rewrite flush --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}/path=html/wp
+        wp rocket clean --confirm --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}/path=html/wp
       shell: bash
