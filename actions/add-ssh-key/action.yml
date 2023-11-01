@@ -1,6 +1,9 @@
 name: "Add SSH Key"
 description: "Adds our private SSH key to the workflow runner so that it can access the remote server"
 inputs:
+  ssh-user:
+    description: "SSH user to use"
+    required: true
   ssh-host:
     description: "SSH host to use"
     required: true
@@ -15,12 +18,5 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: |
-        mkdir -p /home/runner/.ssh
-        ssh-keyscan -p ${{ inputs.ssh-port }} ${{ inputs.ssh-host }} >> /home/runner/.ssh/known_hosts
-        echo "${{ inputs.ssh-key }}" > /home/runner/.ssh/github_actions
-        chmod 600 /home/runner/.ssh/github_actions
-        eval "$(ssh-agent -a /tmp/ssh_agent.sock)"
-        ssh-add /home/runner/.ssh/github_actions
-        mv ${{github.workspace}}/config /home/runner/.ssh/config
+    - run: add-ssh-key.sh ${{ inputs.ssh-user }} ${{ inputs.ssh-host }} ${{ inputs.ssh-key }} ${{ inputs.ssh-port }}
       shell: bash
