@@ -5,7 +5,7 @@ inputs:
     description: "Path to the Github Workspace / repo root"
     default: ${{github.workspace}}
   root_dir:
-    description: "The Plugins Directory"
+    description: "The Root Directory"
     default: "html"
   json_filename:
     description: "The name of the json file that will be output"

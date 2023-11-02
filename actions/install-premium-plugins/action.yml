@@ -1,0 +1,20 @@
+name: "Install Premium Plugins"
+description: "installs premium plugins from zip and ensures all plugins are active"
+inputs:
+  plugins_json_file: # id of input
+    description: "The Plugins Json File"
+    required: true
+    default: "plugins.json"
+  destination-path:
+    description: "Destination path on the target server"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Collect premium-plugins into plugins.json
+      uses: atticusseven/.github/actions/collect-premium-plugins@main
+    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
+    - run: install-premium-plugins.sh ${{github.workspace}}/${{ inputs.plugins_json_file }} ${{inputs.destination-path}}
+      shell: bash
