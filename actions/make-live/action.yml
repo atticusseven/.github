@@ -1,0 +1,29 @@
+name: Make Live
+description: Create logs and backup directory and switch off maintenance mode
+inputs:
+  destination-path:
+    description: Destination path on the target server
+    required: true
+  conf_dir:
+    description: Path to the conf dir
+    required: true
+    default: conf
+  env:
+    description: dev, staging or production
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Create logs directory if not there already
+      run: ssh server "mkdir -p ${{inputs.destination-path}}/logs"
+      shell: bash
+    - name: Create backups directory if env is production
+      if: "${{ inputs.env == 'production' }}"
+      run: ssh server "mkdir -p ${{inputs.destination-path}}/backups"
+      shell: bash
+    - name: Switch off maintenance mode
+      run: |
+        ssh server 'mv ${{inputs.destination-path}}/${{inputs.conf_dir}}/.env ${{inputs.destination-path}}/${{inputs.conf_dir}}/old.env'
+        ssh server 'sed -e "s|A7_MAINTENANCE=\"on\"|A7_MAINTENANCE=\"off\"|" ${{inputs.destination-path}}/${{inputs.conf_dir}}/old.env > ${{inputs.destination-path}}/${{inputs.conf_dir}}/.env'
+      shell: bash
