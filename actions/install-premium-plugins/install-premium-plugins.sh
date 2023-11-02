@@ -25,6 +25,6 @@ done
 
 #clean up
 # remove premium plugins directory from destination server
-ssh server  "rm -rf ${SSH_DESTINATION_DIR}/premium-plugins"
+ssh server "rm -rf ${SSH_DESTINATION_DIR}/premium-plugins"
 
 echo $?

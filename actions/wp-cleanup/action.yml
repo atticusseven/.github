@@ -1,5 +1,5 @@
 name: "WP Clean Up"
-description: "Adds our private SSH key to the workflow runner so that it can access the remote server"
+description: "Flushes the object cache, page cache and rewrites/permalinks"
 inputs:
   destination-path:
     description: "Destination path on the target server"
