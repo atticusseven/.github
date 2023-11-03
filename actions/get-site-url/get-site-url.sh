@@ -15,4 +15,3 @@ else
 fi
 
 echo "site-url=${site_url}"
-echo $?
