@@ -7,8 +7,8 @@ inputs:
   wp-env:
     description: "dev, staging, production"
     required: true
-  outputs:
-    site-url:
+outputs:
+  site-url:
     description: "The site url"
     value: ${{ steps.site-url-generator.outputs.site-url }}
 runs:
@@ -17,5 +17,5 @@ runs:
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
     - id: site-url-generator
-     run: get-site-url.sh ${{ inputs.domain }} ${{ inputs.wp-env }} >> $GITHUB_OUTPUT
+      run: get-site-url.sh ${{ inputs.domain }} ${{ inputs.wp-env }} >> $GITHUB_OUTPUT
       shell: bash
