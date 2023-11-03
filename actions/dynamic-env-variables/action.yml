@@ -29,5 +29,5 @@ runs:
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
     - id: dynamic-env-variables
-      run: dynamic-env-variables.sh ${{ inputs.domain }} ${{ inputs.wp-env }} ${{ inputs.project }} ${{ inputs.redis-databases }} >> $GITHUB_OUTPUT
+      run: dynamic-env-variables.sh ${{ inputs.domain }} ${{ inputs.wp-env }} ${{ inputs.project }} '${{ inputs.redis-databases }}' >> $GITHUB_OUTPUT
       shell: bash
