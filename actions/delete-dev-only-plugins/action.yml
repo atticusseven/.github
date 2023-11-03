@@ -1,0 +1,15 @@
+name: "Delete dev-only plugins"
+description: "Delete dev-only plugins from staging and production env"
+inputs:
+  dev_only_plugins:
+    description: json of plugins only used in dev
+    required: true
+  workspace:
+    description: "Path to the Github Workspace / repo root"
+    default: ${{github.workspace}}
+  root_dir:
+    description: "The Root Directory"
+    default: "html"
+runs:
+  using: "node20"
+  main: "index.js"

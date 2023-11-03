@@ -17,10 +17,22 @@ inputs:
   yoast_seo_token:
     description: Yoast SEO Premium token
     required: true
+  env:
+    description: dev, staging, production
+    required: true
+  dev_only_plugins:
+    description: json of plugins only used in dev
+    required: true
 
 runs:
   using: composite
   steps:
+    - name: Edit composer.json and remove plugins if dev
+      if: "${{ inputs.env != 'dev' }}"
+      uses: atticusseven/.github/actions/delete-dev-only-plugins@main
+      with:
+        dev_only_plugins: ${{inputs.dev_only_plugins}}
+
     - name: Create auth.json
       uses: atticusseven/.github/actions/create-auth-json@main
       with:
