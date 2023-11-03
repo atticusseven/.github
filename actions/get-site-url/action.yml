@@ -1,5 +1,5 @@
 name: "Get Site Url"
-description: "generates the "
+description: "generates the site url based on wp-env"
 inputs:
   domain:
     description: "the root domain"
