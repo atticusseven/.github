@@ -1,13 +1,5 @@
 name: Set Up
 description: Installs and configure any packages required for deployment
-inputs:
-  root_dir:
-    description: location of the root directory
-    required: true
-    default: html
-  site_url: # id of input
-    description: the site url
-    required: true
 
 runs:
   using: composite
