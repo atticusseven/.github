@@ -8,6 +8,8 @@ elif ["${WP_ENV}" = "staging"]; then
     site_url="https://staging.${DOMAIN}"
 elif ["${WP_ENV}" = "production"]; then
     site_url="https://www.${DOMAIN}"]
+else
+    site_url="undefined"
 fi
 
 echo "site-url=${site_url}"
