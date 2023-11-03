@@ -1,0 +1,16 @@
+name: "Get Site Url"
+description: "generates the "
+inputs:
+  domain:
+    description: "the root domain"
+    required: true
+  wp-env:
+    description: "dev, staging, production"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
+    - run: get-site-url.sh ${{ inputs.domain }} ${{ inputs.wp-env }}
+      shell: bash
