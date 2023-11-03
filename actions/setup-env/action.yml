@@ -22,12 +22,23 @@ inputs:
     description: the network ip address
     required: true
     default: undefined
+  wp_cache_key_salt:
+    description: cache salt - use domain
+    required: true
+  wp_redis_database:
+    description: wp_redis_database
+    required: true
 
 runs:
   using: composite
   steps:
     - name: Create .env
-      run: |
-        cd conf
-        sed -e "s|@@@DB_NAME@@@|${{ inputs.db_name }}_dev|" -e "s|@@@DB_USER@@@|${{ inputs.db_user }}|" -e "s|@@@DB_PASSWORD@@@|${{ inputs.db_password }}|" -e "s|@@@DB_PREFIX@@@|${{ inputs.db_prefix }}|" -e "s|@@@NETWORK_IP@@@|${{inputs.network_ip}}|" ${{github.workspace}}/${{inputs.conf_dir}}/template.env > ${{github.workspace}}/${{inputs.conf_dir}}/.env
+      run: sed -e "s|@@@DB_NAME@@@|${{ inputs.db_name }}_dev|"
+        -e "s|@@@DB_USER@@@|${{ inputs.db_user }}|"
+        -e "s|@@@DB_PASSWORD@@@|${{ inputs.db_password }}|"
+        -e "s|@@@DB_PREFIX@@@|${{ inputs.db_prefix }}|"
+        -e "s|@@@NETWORK_IP@@@|${{inputs.network_ip}}|"
+        -e "s|@@@WP_CACHE_KEY_SALT@@@|${{inputs.wp_cache_key_salt}}|"
+        -e "s|@@@WP_REDIS_DATABASE@@@|${{inputs.wp_redis_database}}|"
+        ${{github.workspace}}/${{inputs.conf_dir}}/template.env > ${{github.workspace}}/${{inputs.conf_dir}}/.env
       shell: bash

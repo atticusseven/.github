@@ -21,6 +21,6 @@ fi
 #mnt/falo/sites/dev/dev.findalondonoffice.co.uk
 env_path="/mnt/$PROJECT/sites/$WP_ENV/$env_domain"
 
-echo "env_domain=https://${env_domain}"#
+echo "env_domain=${env_domain}"#
 echo "env_path=${env_path}"
 echo "env_redis_db=${env_redis_db}"
