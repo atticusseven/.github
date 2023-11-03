@@ -22,7 +22,7 @@ outputs:
     value: ${{ steps.dynamic-env-variables.outputs.env_path }}
   env_redis_db:
     description: "path to the site on the target server"
-    value: ${{ steps.dynamic-env-variables.outputs.env_path }}
+    value: ${{ steps.dynamic-env-variables.outputs.env_redis_db }}
 runs:
   using: "composite"
   steps:
