@@ -6,7 +6,7 @@ PROJECT=$3
 REDIS_DATABASES=$4
 
 redis_databases=`echo "${REDIS_DATABASES}" | json`
-env_redis_db=$(jq -r ".$WP_ENV" <<< "$redis_databases");
+env_redis_db=$(jq -r ".$WP_ENV" <<< "${redis_databases}");
 
 if [[ "$WP_ENV" == "dev" ]]; then
     env_domain="dev.${DOMAIN}"
