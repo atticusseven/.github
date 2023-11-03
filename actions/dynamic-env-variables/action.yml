@@ -1,0 +1,27 @@
+name: "Get Site Url"
+description: "generates the site url based on wp-env"
+inputs:
+  domain:
+    description: "the root domain"
+    required: true
+  wp-env:
+    description: "dev, staging, production"
+    required: true
+  project:
+    description: "the name of the project and the parent directory on the target server"
+    required: true
+outputs:
+  env_domain:
+    description: "The site url"
+    value: ${{ steps.dynamic-env-variables.outputs.env_domain }}
+  env_path:
+    description: "path to the site on the target server"
+    value: ${{ steps.dynamic-env-variables.outputs.env_path }}
+runs:
+  using: "composite"
+  steps:
+    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
+    - id: dynamic-env-variables
+      run: dynamic-env-variables.sh ${{ inputs.domain }} ${{ inputs.wp-env }} ${{ inputs.project }} >> $GITHUB_OUTPUT
+      shell: bash
