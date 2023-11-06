@@ -13,9 +13,7 @@ runs:
   using: "composite"
   steps:
     - name: Switch on maintenance mode
-      run: |
-        ssh server 'mv ${{inputs.destination-path}}/${{inputs.conf_dir}}/.env ${{inputs.destination-path}}/${{inputs.conf_dir}}/old.env'
-        ssh server 'sed -e "s|A7_MAINTENANCE=\"off\"|A7_MAINTENANCE=\"on\"|" ${{inputs.destination-path}}/${{inputs.conf_dir}}/old.env > ${{inputs.destination-path}}/${{inputs.conf_dir}}/.env'
+      run: switch-on-maintenance.sh ${{inputs.conf_dir}} ${{inputs.destination-path}}
       shell: bash
     - name: Rsync to the remote
       run: rsync -avPC --no-perms --delete-after  --no-perms --exclude-from='${{github.workspace}}/exclude.txt' . server:${{inputs.destination-path}}
