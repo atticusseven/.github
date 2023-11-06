@@ -12,6 +12,8 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
     - name: Switch on maintenance mode
       run: switch-on-maintenance.sh ${{inputs.conf_dir}} ${{inputs.destination-path}}
       shell: bash
