@@ -5,7 +5,7 @@ const fs = require("fs");
 try {
   const workspace = core.getInput("workspace");
   const root_dir = core.getInput("root_dir");
-  const composer_json_file = workspace + "/" + root_dir + "/" + composer.json;
+  const composer_json_file = workspace + "/" + root_dir + "/composer.json";
   const composer_json = fs.readFileSync(composer_json_file);
   const composer = JSON.parse(composer_json);
 
