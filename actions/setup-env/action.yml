@@ -33,7 +33,7 @@ runs:
   using: composite
   steps:
     - name: Create .env
-      run: sed -e "s|@@@DB_NAME@@@|${{ inputs.db_name }}_dev|"
+      run: sed -e "s|@@@DB_NAME@@@|${{ inputs.db_name }}|"
         -e "s|@@@DB_USER@@@|${{ inputs.db_user }}|"
         -e "s|@@@DB_PASSWORD@@@|${{ inputs.db_password }}|"
         -e "s|@@@DB_PREFIX@@@|${{ inputs.db_prefix }}|"
