@@ -10,6 +10,8 @@ inputs:
   project:
     description: "the name of the project and the parent directory on the target server"
     required: true
+  db_name:
+    description: "production database name"
   redis-databases:
     description: "json containing mapped redis db numbers for each env"
     required: true
@@ -21,13 +23,16 @@ outputs:
     description: "path to the site on the target server"
     value: ${{ steps.dynamic-env-variables.outputs.env_path }}
   env_redis_db:
-    description: "path to the site on the target server"
+    description: "interger representing the redis db"
     value: ${{ steps.dynamic-env-variables.outputs.env_redis_db }}
+  env_db_name:
+    description: "mysql db_name for this env"
+    value: ${{ steps.dynamic-env-variables.outputs.env_db_name }}
 runs:
   using: "composite"
   steps:
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
     - id: dynamic-env-variables
-      run: dynamic-env-variables.sh ${{ inputs.domain }} ${{ inputs.wp-env }} ${{ inputs.project }} '${{ inputs.redis-databases }}' >> $GITHUB_OUTPUT
+      run: dynamic-env-variables.sh ${{ inputs.domain }} ${{ inputs.wp-env }} ${{ inputs.project }} ${{ inputs.db_name }} '${{ inputs.redis-databases }}' >> $GITHUB_OUTPUT
       shell: bash
