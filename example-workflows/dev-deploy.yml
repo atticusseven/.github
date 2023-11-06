@@ -1,0 +1,44 @@
+name: Deploy to Dev
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dev
+
+jobs:
+  set-up-env-variables-deploy:
+    name: Set up env variables and deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Set Up dynamic enviroment vars"
+        id: "dynamic-env-variables"
+        uses: atticusseven/.github/actions/dynamic-env-variables@main
+        with:
+          domain: ${{vars.DOMAIN}}
+          wp-env: dev
+          project: ${{vars.PROJECT}}
+          redis-databases: ${{vars.REDIS_DATABASES}}
+          db_name: ${{vars.DB_NAME}}
+      - name: "Run default deploy"
+        uses: atticusseven/.github/actions/default-deploy@main
+        with:
+          wp-env: dev
+          theme: ${{vars.THEME}}
+          site_url: ${{steps.dynamic-env-variables.outputs.env_domain}}
+          acf_licence_key: ${{ secrets.ACF_LICENCE_KEY }}
+          ac_token: ${{ secrets.AC_TOKEN }}
+          yoast_seo_token: ${{ secrets.YOAST_SEO_TOKEN }}
+          dev_only_plugins: ${{ vars.DEV_ONLY_PLUGINS }}
+          ssh-user: ${{vars.SSH_USER}}
+          ssh-port: ${{vars.SSH_PORT}}
+          ssh-host: ${{vars.SSH_HOST}}
+          ssh-key: ${{secrets.SSH_PRIVATE_KEY}}
+          db_name: ${{steps.dynamic-env-variables.outputs.env_db_name}}
+          db_user: ${{vars.DB_USER}}
+          db_password: ${{secrets.DB_PASSWORD}}
+          db_prefix: ${{vars.DB_PREFIX}}
+          wp_cache_key_salt: ${{steps.dynamic-env-variables.outputs.env_domain}}
+          wp_redis_database: ${{steps.dynamic-env-variables.outputs.env_redis_db}}
+          #network_ip:
+          destination-path: ${{steps.dynamic-env-variables.outputs.env_path}}

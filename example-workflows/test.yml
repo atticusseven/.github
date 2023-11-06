@@ -1,0 +1,45 @@
+name: Testing
+
+env:
+  WP_ENV: dev
+
+on:
+  workflow_dispatch:
+
+jobs:
+  runner:
+    runs-on: ubuntu-latest
+
+    steps:
+      # - name: Git checkout
+      #   uses: actions/checkout@v3
+      #   with:
+      #     fetch-depth: 0
+      - name: Set up - install libraries required for deployment
+        uses: atticusseven/.github/actions/setup@main
+
+      - name: "Set Up dynamic enviroment vars"
+        id: "dynamic-env-variables"
+        uses: atticusseven/.github/actions/dynamic-env-variables@main
+        with:
+          domain: ${{vars.DOMAIN}}
+          wp-env: $WP_ENV
+          project: ${{vars.PROJECT}}
+          redis-databases: ${{vars.REDIS_DATABASES}}
+      - name: "Example output call between steps"
+        run: |
+          echo ${{steps.dynamic-env-variables.outputs.env_domain}}
+          echo ${{steps.dynamic-env-variables.outputs.env_path}}
+          echo ${{steps.dynamic-env-variables.outputs.env_redis_db}}
+
+      # - name: Add SSH Key to this runner
+      #   uses: atticusseven/.github/actions/add-ssh-key@main
+      #   with:
+      #     ssh-user: ${{vars.SSH_USER}}
+      #     ssh-port: ${{vars.SSH_PORT}}
+      #     ssh-host: ${{vars.SSH_HOST}}
+      #     ssh-key: ${{secrets.SSH_PRIVATE_KEY}}
+      # - name: Manage Plugins
+      #   uses: atticusseven/.github/actions/manage-plugins@main
+      #   with:
+      #     destination-path: ${{vars.SSH_DEV_DIR}}
