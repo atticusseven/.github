@@ -9,8 +9,10 @@ runs:
   using: "composite"
   steps:
     - run: |
-        wp package install wp-media/wp-rocket-cli:trunk
         wp cache flush --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}/html/wp
         wp rewrite flush --ssh=server:${{ inputs.destination-path }}/html/wp
-        wp rocket clean --confirm --ssh=server:${{ inputs.destination-path }}/html/wp
+      shell: bash
+    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
+    - run: wp-cleanup.sh ${{ inputs.destination-path }}
       shell: bash
