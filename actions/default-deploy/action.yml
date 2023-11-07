@@ -63,9 +63,6 @@ runs:
     - name: Checkout and Verify Branch is up to date
       uses: atticusseven/.github/actions/checkout-and-verify@main
 
-    - name: Set up - install libraries required for deployment
-      uses: atticusseven/.github/actions/setup@main
-
     - name: Compile, Minify and Combine
       uses: atticusseven/.github/actions/compile-minify-combine@main
       with:
