@@ -34,6 +34,7 @@ runs:
         dev_only_plugins: ${{inputs.dev_only_plugins}}
 
     - name: Create auth.json
+      if: "${{ inputs.acf_licence_key != '' && inputs.ac_token != '' }}"
       uses: atticusseven/.github/actions/create-auth-json@main
       with:
         acf_licence_key: ${{inputs.acf_licence_key}}
@@ -43,6 +44,7 @@ runs:
       run: cat ${{github.workspace}}/html/auth.json
       shell: bash
     - name: Register Yoast SEO token with composer
+      if: "${{ inputs.yoast_seo_token != '' }}"
       run: composer config -g http-basic.my.yoast.com token ${{ inputs.yoast_seo_token }}
       shell: bash
     - name: Install composer dependencies
