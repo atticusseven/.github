@@ -34,6 +34,9 @@ inputs:
   falo_api_password:
     description: ""
     default: ""
+  site_url:
+    description: ""
+    required: true
 
 runs:
   using: composite
@@ -48,5 +51,6 @@ runs:
         -e "s|@@@WP_REDIS_DATABASE@@@|${{inputs.wp_redis_database}}|"
         -e "s|@@@CRM_APPLICATION_PASSWORD@@@|${{inputs.crm_application_password}}|"
         -e "s|@@@FALO_API_PASSWORD@@@|${{inputs.falo_api_password}}|"
+        -e "s|@@@SITE_URL@@@|${{inputs.site_url}}|"
         ${{github.workspace}}/${{inputs.conf_dir}}/template.env > ${{github.workspace}}/${{inputs.conf_dir}}/.env
       shell: bash

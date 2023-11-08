@@ -107,6 +107,7 @@ runs:
         wp_redis_database: ${{ inputs.wp_redis_database }}
         crm_application_password: ${{ inputs.crm_application_password }}
         falo_api_password: ${{ inputs.falo_api_password }}
+        site_url: ${{ inputs.site_url }}
         #network_ip:
 
     - name: RSync to the Server
