@@ -40,5 +40,7 @@ runs:
         -e "s|@@@NETWORK_IP@@@|${{inputs.network_ip}}|"
         -e "s|@@@WP_CACHE_KEY_SALT@@@|${{inputs.wp_cache_key_salt}}|"
         -e "s|@@@WP_REDIS_DATABASE@@@|${{inputs.wp_redis_database}}|"
+        -e "s|@@@CRM_APPLICATION_PASSWORD@@@|${{inputs.crm_application_password}}|"
+        -e "s|@@@FALO_API_PASSWORD@@@|${{inputs.falo_api_password}}|"
         ${{github.workspace}}/${{inputs.conf_dir}}/template.env > ${{github.workspace}}/${{inputs.conf_dir}}/.env
       shell: bash
