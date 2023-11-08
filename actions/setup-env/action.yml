@@ -28,6 +28,12 @@ inputs:
   wp_redis_database:
     description: wp_redis_database
     required: true
+  crm_application_password:
+    description: ""
+    default: ""
+  falo_api_password:
+    description: ""
+    default: ""
 
 runs:
   using: composite

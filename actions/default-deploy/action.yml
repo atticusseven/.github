@@ -56,6 +56,12 @@ inputs:
   destination-path:
     required: true
     description: ""
+  crm_application_password:
+    description: ""
+    default: ""
+  falo_api_password:
+    description: ""
+    default: ""
 
 runs:
   using: "composite"
@@ -99,6 +105,8 @@ runs:
         db_prefix: ${{ inputs.db_prefix }}
         wp_cache_key_salt: ${{ inputs.wp_cache_key_salt }}
         wp_redis_database: ${{ inputs.wp_redis_database }}
+        crm_application_password: ${{ inputs.crm_application_password }}
+        falo_api_password: ${{ inputs.falo_api_password }}
         #network_ip:
 
     - name: RSync to the Server
