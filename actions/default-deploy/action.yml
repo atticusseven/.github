@@ -78,42 +78,46 @@ runs:
         env: ${{ inputs.wp-env }}
         dev_only_plugins: ${{ inputs.dev_only_plugins }}
 
-    - name: Add SSH Key to this runner
-      uses: atticusseven/.github/actions/add-ssh-key@main
-      with:
-        ssh-user: ${{ inputs.ssh-user }}
-        ssh-port: ${{ inputs.ssh-port }}
-        ssh-host: ${{ inputs.ssh-host }}
-        ssh-key: ${{ inputs.ssh-key }}
+    - name: Debug
+      run: ls -la html/content/mu-plugins/admin-columns-pro/assets
+      shell: bash
 
-    - name: Create .env from template.env
-      uses: atticusseven/.github/actions/setup-env@main
-      with:
-        db_name: ${{ inputs.db_name }}
-        db_user: ${{ inputs.db_user }}
-        db_password: ${{ inputs.db_password }}
-        db_prefix: ${{ inputs.db_prefix }}
-        wp_cache_key_salt: ${{ inputs.wp_cache_key_salt }}
-        wp_redis_database: ${{ inputs.wp_redis_database }}
-        #network_ip:
+    # - name: Add SSH Key to this runner
+    #   uses: atticusseven/.github/actions/add-ssh-key@main
+    #   with:
+    #     ssh-user: ${{ inputs.ssh-user }}
+    #     ssh-port: ${{ inputs.ssh-port }}
+    #     ssh-host: ${{ inputs.ssh-host }}
+    #     ssh-key: ${{ inputs.ssh-key }}
 
-    - name: RSync to the Server
-      uses: atticusseven/.github/actions/deploy-via-rsync@main
-      with:
-        destination-path: ${{ inputs.destination-path }}
+    # - name: Create .env from template.env
+    #   uses: atticusseven/.github/actions/setup-env@main
+    #   with:
+    #     db_name: ${{ inputs.db_name }}
+    #     db_user: ${{ inputs.db_user }}
+    #     db_password: ${{ inputs.db_password }}
+    #     db_prefix: ${{ inputs.db_prefix }}
+    #     wp_cache_key_salt: ${{ inputs.wp_cache_key_salt }}
+    #     wp_redis_database: ${{ inputs.wp_redis_database }}
+    #     #network_ip:
 
-    - name: Install Premium Plugins
-      uses: atticusseven/.github/actions/install-premium-plugins@main
-      with:
-        destination-path: ${{ inputs.destination-path }}
+    # - name: RSync to the Server
+    #   uses: atticusseven/.github/actions/deploy-via-rsync@main
+    #   with:
+    #     destination-path: ${{ inputs.destination-path }}
 
-    - name: WP Cleanup
-      uses: atticusseven/.github/actions/wp-cleanup@main
-      with:
-        destination-path: ${{ inputs.destination-path }}
+    # - name: Install Premium Plugins
+    #   uses: atticusseven/.github/actions/install-premium-plugins@main
+    #   with:
+    #     destination-path: ${{ inputs.destination-path }}
 
-    - name: Make Live
-      uses: atticusseven/.github/actions/make-live@main
-      with:
-        destination-path: ${{ inputs.destination-path }}
-        env: ${{ inputs.wp-env }}
+    # - name: WP Cleanup
+    #   uses: atticusseven/.github/actions/wp-cleanup@main
+    #   with:
+    #     destination-path: ${{ inputs.destination-path }}
+
+    # - name: Make Live
+    #   uses: atticusseven/.github/actions/make-live@main
+    #   with:
+    #     destination-path: ${{ inputs.destination-path }}
+    #     env: ${{ inputs.wp-env }}
