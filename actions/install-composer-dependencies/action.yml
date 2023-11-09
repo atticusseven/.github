@@ -5,7 +5,7 @@ inputs:
     description: location of the site root directory
     required: true
     default: html
-  site_url:
+  env_domain:
     description: the website's URL
     required: true
   acf_licence_key:
@@ -39,7 +39,7 @@ runs:
       with:
         acf_licence_key: ${{inputs.acf_licence_key}}
         ac_token: ${{inputs.ac_token}}
-        site_url: https://${{inputs.site_url}}
+        env_domain: https://${{inputs.env_domain}}
     - name: Output auth.json
       run: cat ${{github.workspace}}/html/auth.json
       shell: bash

@@ -10,7 +10,7 @@ inputs:
   json_filename:
     description: "The name of the json file that will be output"
     default: "auth.json"
-  site_url:
+  env_domain:
     description: the website's URL
     required: true
   acf_licence_key:

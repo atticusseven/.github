@@ -7,10 +7,13 @@ inputs:
   theme:
     description: theme directory
     required: true
-  site_url:
+  env_domain:
     required: true
     description: ""
-  root_domain:
+  env_root_domain:
+    required: true
+    description: ""
+  project_root_domain:
     required: true
     description: ""
   acf_licence_key:
@@ -80,7 +83,7 @@ runs:
     - name: Install Composer Dependencies
       uses: atticusseven/.github/actions/install-composer-dependencies@main
       with:
-        site_url: ${{ inputs.site_url }}
+        env_domain: ${{ inputs.env_domain }}
         acf_licence_key: ${{ inputs.acf_licence_key }}
         ac_token: ${{ inputs.ac_token }}
         yoast_seo_token: ${{ inputs.yoast_seo_token }}
@@ -110,8 +113,10 @@ runs:
         wp_redis_database: ${{ inputs.wp_redis_database }}
         crm_application_password: ${{ inputs.crm_application_password }}
         falo_api_password: ${{ inputs.falo_api_password }}
-        site_url: ${{ inputs.site_url }}
-        root_domain: ${{ inputs.root_domain }}
+        env_domain: ${{ inputs.env_domain }}
+        env_root_domain: ${{ inputs.env_root_domain }}
+        project_root_domain: ${{ inputs.project_root_domain }}
+
         #network_ip:
 
     - name: RSync to the Server

@@ -12,7 +12,7 @@ try {
     "http-basic": {
       "connect.advancedcustomfields.com": {
         username: core.getInput("acf_licence_key"),
-        password: core.getInput("site_url"),
+        password: core.getInput("env_domain"),
       },
     },
     bearer: {
