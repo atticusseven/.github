@@ -10,14 +10,14 @@ REDIS_DATABASES=$6
 redis_databases=`echo "${REDIS_DATABASES}" | json`
 env_redis_db=$(jq -r ".$WP_ENV" <<< "${redis_databases}");
 
+root_domain="${DOMAIN}"
+
 #Do NOT use the WWW subdomain on the site_domain (reserved for production env)
 if [[ "$SUB_DOMAIN" != "www" && "$SUB_DOMAIN" != "" ]]; then
     site_domain="${SUB_DOMAIN}.${DOMAIN}"
 else
     site_domain="${DOMAIN}"
 fi
-
-root_domain="${DOMAIN}"
 
 # Prepend env subdomains
 

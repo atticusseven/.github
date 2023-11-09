@@ -28,7 +28,7 @@ outputs:
     value: ${{ steps.dynamic-env-variables.outputs.env_root_domain }}
   root_domain:
     description: "The root url for the whole project, typically used for email"
-    value: ${{ steps.dynamic-env-variables.outputs.env_root_domain }}
+    value: ${{ steps.dynamic-env-variables.outputs.root_domain }}
   env_path:
     description: "path to the site on the target server"
     value: ${{ steps.dynamic-env-variables.outputs.env_path }}
