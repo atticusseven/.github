@@ -10,6 +10,9 @@ inputs:
   site_url:
     required: true
     description: ""
+  root_domain:
+    required: true
+    description: ""
   acf_licence_key:
     required: true
     description: ""
@@ -108,6 +111,7 @@ runs:
         crm_application_password: ${{ inputs.crm_application_password }}
         falo_api_password: ${{ inputs.falo_api_password }}
         site_url: ${{ inputs.site_url }}
+        root_domain: ${{ inputs.root_domain }}
         #network_ip:
 
     - name: RSync to the Server

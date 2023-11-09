@@ -4,6 +4,10 @@ inputs:
   domain:
     description: "the root domain"
     required: true
+  sub_domain:
+    description: "optional sub-domain"
+    required: false
+    default: ""
   wp-env:
     description: "dev, staging, production"
     required: true
@@ -17,8 +21,14 @@ inputs:
     required: true
 outputs:
   env_domain:
-    description: "The site url"
+    description: "The site url for this env"
     value: ${{ steps.dynamic-env-variables.outputs.env_domain }}
+  env_root_domain:
+    description: "The root url for this env, if the env_domain is a sub-domain - useful for APIs / communicating between other sites in the project within the same env"
+    value: ${{ steps.dynamic-env-variables.outputs.env_root_domain }}
+  root_domain:
+    description: "The root url for the whole project, typically used for email"
+    value: ${{ steps.dynamic-env-variables.outputs.env_root_domain }}
   env_path:
     description: "path to the site on the target server"
     value: ${{ steps.dynamic-env-variables.outputs.env_path }}
@@ -34,5 +44,5 @@ runs:
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
     - id: dynamic-env-variables
-      run: dynamic-env-variables.sh ${{ inputs.domain }} ${{ inputs.wp-env }} ${{ inputs.project }} ${{ inputs.db_name }} '${{ inputs.redis-databases }}' >> $GITHUB_OUTPUT
+      run: dynamic-env-variables.sh ${{ inputs.domain }} ${{ inputs.sub_domain }} ${{ inputs.wp-env }} ${{ inputs.project }} ${{ inputs.db_name }} '${{ inputs.redis-databases }}' >> $GITHUB_OUTPUT
       shell: bash
