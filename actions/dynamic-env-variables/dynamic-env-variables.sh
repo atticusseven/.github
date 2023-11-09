@@ -23,7 +23,7 @@ root_domain="${DOMAIN}"
 
 if [[ "$WP_ENV" == "dev" || "$WP_ENV" == "staging" ]]; then
     env="${WP_ENV}"
-else [[ "$WP_ENV" == "production" ]]; then
+elif [[ "$WP_ENV" == "production" ]]; then
     if [[ "$SUB_DOMAIN" == "www" || "$SUB_DOMAIN" == "" ]]; then
         env="${SUB_DOMAIN}"
     else
