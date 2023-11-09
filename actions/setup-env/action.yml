@@ -43,6 +43,9 @@ inputs:
   project_root_domain:
     description: ""
     required: true
+  env_subdomain:
+    description: ""
+    required: true
 
 runs:
   using: composite
@@ -60,5 +63,6 @@ runs:
         -e "s|@@@ENV_DOMAIN@@@|${{inputs.env_domain}}|"
         -e "s|@@@ENV_ROOT_DOMAIN@@@|${{inputs.env_root_domain}}|"
         -e "s|@@@PROJECT_ROOT_DOMAIN@@@|${{inputs.project_root_domain}}|"
+        -e "s|@@@ENV_SUBDOMAIN@@@|${{inputs.env_subdomain}}|"
         ${{github.workspace}}/${{inputs.conf_dir}}/template.env > ${{github.workspace}}/${{inputs.conf_dir}}/.env
       shell: bash

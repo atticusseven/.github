@@ -31,18 +31,21 @@ elif [[ "$WP_ENV" == "production" ]]; then
     fi
 fi
 
-if [[ $env == "" ]]; then #no leading dot
+if [[ $env == "" ]]; then #no leading dot / trailing underscore
     env_domain="${site_domain}"
     env_root_domain="${project_root_domain}"
+    env_db_name="${DB_NAME}"
+    env_subdomain=""
 else
     env_domain="${env}.${site_domain}"
     env_root_domain="${env}.${project_root_domain}"
+    env_db_name="${DB_NAME}_${env}"
+    env_subdomain="${env}."
 fi
 
-env_db_name="${DB_NAME}_${env}"
-
-#mnt/falo/sites/dev/dev.findalondonoffice.co.uk
 env_path="/mnt/$PROJECT/sites/$WP_ENV/$env_domain"
+
+
 
 echo "env_domain=${env_domain}"
 echo "env_root_domain=${env_root_domain}"
@@ -50,3 +53,4 @@ echo "project_root_domain=${project_root_domain}"
 echo "env_path=${env_path}"
 echo "env_redis_db=${env_redis_db}"
 echo "env_db_name=${env_db_name}"
+echo "env_subdomain=${env_subdomain}"

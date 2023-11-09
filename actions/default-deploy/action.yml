@@ -16,6 +16,10 @@ inputs:
   project_root_domain:
     required: true
     description: ""
+  env_subdomain:
+    required: true
+    description: ""
+    default: ""
   acf_licence_key:
     required: true
     description: ""
@@ -116,6 +120,7 @@ runs:
         env_domain: ${{ inputs.env_domain }}
         env_root_domain: ${{ inputs.env_root_domain }}
         project_root_domain: ${{ inputs.project_root_domain }}
+        env_subdomain: ${{ inputs.env_subdomain }}
 
         #network_ip:
 

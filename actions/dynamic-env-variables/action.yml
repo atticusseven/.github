@@ -35,6 +35,9 @@ outputs:
   env_redis_db:
     description: "interger representing the redis db"
     value: ${{ steps.dynamic-env-variables.outputs.env_redis_db }}
+  env_subdomain:
+    description: "mysql db_name for this env"
+    value: ${{ steps.dynamic-env-variables.outputs.env_subdomain }}
   env_db_name:
     description: "mysql db_name for this env"
     value: ${{ steps.dynamic-env-variables.outputs.env_db_name }}
