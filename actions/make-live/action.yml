@@ -26,4 +26,5 @@ runs:
       run: |
         ssh server 'mv ${{inputs.destination-path}}/${{inputs.conf_dir}}/.env ${{inputs.destination-path}}/${{inputs.conf_dir}}/old.env'
         ssh server 'sed -e "s|A7_MAINTENANCE=\"on\"|A7_MAINTENANCE=\"off\"|" ${{inputs.destination-path}}/${{inputs.conf_dir}}/old.env > ${{inputs.destination-path}}/${{inputs.conf_dir}}/.env'
+        ssh server 'rm ${{inputs.destination-path}}/${{inputs.conf_dir}}/old.env'
       shell: bash
