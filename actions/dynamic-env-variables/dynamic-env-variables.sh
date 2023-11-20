@@ -39,7 +39,11 @@ if [[ $env == "" ]]; then #no leading dot / trailing underscore
 else
     env_domain="${env}.${site_domain}"
     env_root_domain="${env}.${project_root_domain}"
-    env_db_name="${DB_NAME}_${env}"
+    if [[ $env == "www" ]]; then
+        env_db_name="${DB_NAME}"
+    else
+        env_db_name="${DB_NAME}_${env}"
+    fi
     env_subdomain="${env}."
 fi
 
