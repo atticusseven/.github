@@ -41,10 +41,12 @@ else
     env_root_domain="${env}.${project_root_domain}"
     if [[ $env == "www" ]]; then
         env_db_name="${DB_NAME}"
+        env_subdomain=""
     else
         env_db_name="${DB_NAME}_${env}"
+        env_subdomain="${env}."
     fi
-    env_subdomain="${env}."
+    
 fi
 
 env_path="/mnt/$PROJECT/sites/$WP_ENV/$env_domain"
