@@ -27,7 +27,6 @@ inputs:
     required: true
     description: ""
   yoast_seo_token:
-    required: true
     description: ""
   dev_only_plugins:
     required: true
