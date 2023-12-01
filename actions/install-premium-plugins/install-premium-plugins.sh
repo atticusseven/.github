@@ -3,7 +3,7 @@
 PLUGINS_JSON_FILE=$1
 SSH_DESTINATION_DIR=$2
 
-wp_cli_default_params="--skip-plugins --skip-themes --ssh=server${SSH_DESTINATION_DIR}/html/wp"
+wp_cli_default_params="--skip-plugins --skip-themes --ssh=server:${SSH_DESTINATION_DIR}/html/wp"
 
 install_activate_premium_plugin() {
     plugin=$1
