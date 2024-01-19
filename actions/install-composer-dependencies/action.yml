@@ -28,7 +28,7 @@ runs:
   using: composite
   steps:
     - name: Edit composer.json and remove plugins if dev
-      if: "${{ inputs.env != 'dev' }}"
+      if: "${{ inputs.env == 'production'  }}"
       uses: atticusseven/.github/actions/delete-dev-only-plugins@main
       with:
         dev_only_plugins: ${{inputs.dev_only_plugins}}
