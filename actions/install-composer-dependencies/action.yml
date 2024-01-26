@@ -27,12 +27,11 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Edit composer.json and remove plugins if dev
+    - name: Edit composer.json and remove plugins if dev or staging
       if: "${{ inputs.env == 'production'  }}"
       uses: atticusseven/.github/actions/delete-dev-only-plugins@main
       with:
         dev_only_plugins: ${{inputs.dev_only_plugins}}
-
     - name: Create auth.json
       if: "${{ inputs.acf_licence_key != '' && inputs.ac_token != '' }}"
       uses: atticusseven/.github/actions/create-auth-json@main
