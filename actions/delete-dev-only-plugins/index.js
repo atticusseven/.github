@@ -9,7 +9,7 @@ try {
   const composer_json = fs.readFileSync(composer_json_file);
   console.log(composer_json);
   const composer = JSON.parse(composer_json);
-  console.log(composer);
+  //console.log(composer);
 
   const dev_only_plugins_json = core.getInput("dev_only_plugins");
   console.log(dev_only_plugins_json);
