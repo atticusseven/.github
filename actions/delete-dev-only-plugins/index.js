@@ -12,7 +12,7 @@ try {
   //console.log(composer);
 
   const dev_only_plugins_json = core.getInput("dev_only_plugins");
-  console.log(dev_only_plugins_json);
+  console.log("wibble");
   const dev_only_plugins = JSON.parse(dev_only_plugins_json);
   console.log(dev_only_plugins);
 
