@@ -8,13 +8,15 @@ try {
   const composer_json_file = workspace + "/" + root_dir + "/composer.json";
   const composer_json = fs.readFileSync(composer_json_file);
   console.log(composer_json);
-  const composer = JSON.parse(composer_json);
+  //const composer = JSON.parse(composer_json);
   //console.log(composer);
 
   const dev_only_plugins_json = core.getInput("dev_only_plugins");
   console.log(dev_only_plugins_json);
   const dev_only_plugins = JSON.parse(dev_only_plugins_json);
   console.log(dev_only_plugins);
+
+  return;
 
   for (let i = 0; i < dev_only_plugins.length; i++) {
     delete composer.require["wpackagist-plugin/" + dev_only_plugins[i]];
