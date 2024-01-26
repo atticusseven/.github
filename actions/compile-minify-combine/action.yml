@@ -26,15 +26,15 @@ runs:
     - name: PostCSS autoprefixer
       run: postcss -u autoprefixer --autoprefixer.browsers "> 5%" -o ${{github.workspace}}/${{ inputs.theme_dir }}/library/css/styles.css ${{github.workspace}}/${{ inputs.theme_dir }}/library/css/styles.css
       shell: bash
-    - name: Remove console commands
-      uses: jacobtomlinson/gha-find-replace@v3
-      with:
-        find: 'console\.(info|log)\(([^)]+)\)'
-        replace: " "
-        include: "**/*.js"
-        regex: true
-    # - name: Minify JS and CSS
-    #   uses: nizarmah/auto-minify@v2.1
+    # - name: Remove console commands
+    #   uses: jacobtomlinson/gha-find-replace@v3
     #   with:
-    #     overwrite: true
-    #     directory: ${{github.workspace}}/${{ inputs.content_dir }}
+    #     find: 'console\.(info|log)\(([^)]+)\)'
+    #     replace: " "
+    #     include: "**/*.js"
+    #     regex: true
+    - name: Minify JS and CSS
+      uses: nizarmah/auto-minify@v2.1
+      with:
+        overwrite: true
+        directory: ${{github.workspace}}/${{ inputs.content_dir }}
