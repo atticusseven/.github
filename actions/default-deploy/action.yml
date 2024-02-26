@@ -132,7 +132,14 @@ runs:
       with:
         destination-path: ${{ inputs.destination-path }}
 
+    - name: Check file existence
+      id: check_files
+      uses: andstor/file-existence-action@v3
+      with:
+        files: "premium-plugins"
+
     - name: Install Premium Plugins
+      if: steps.check_files.outputs.files_exists == 'true'
       uses: atticusseven/.github/actions/install-premium-plugins@main
       with:
         destination-path: ${{ inputs.destination-path }}
