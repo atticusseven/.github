@@ -18,5 +18,5 @@ runs:
       run: switch-on-maintenance.sh ${{inputs.conf_dir}} ${{inputs.destination-path}}
       shell: bash
     - name: Rsync to the remote
-      run: rsync -avPC --no-perms --delete --include 'core' --exclude-from='${{github.workspace}}/exclude.txt' . server:${{inputs.destination-path}}
+      run: rsync -avPC --no-perms --delete --include 'core' --exclude-from='${{github.workspace}}/.rsyncignore' . server:${{inputs.destination-path}}
       shell: bash
