@@ -71,6 +71,9 @@ inputs:
   falo_api_password:
     description: ""
     default: ""
+  compile:
+    description: ""
+    default: "yes"
 
 runs:
   using: "composite"
@@ -79,6 +82,7 @@ runs:
       uses: atticusseven/.github/actions/checkout-and-verify@main
 
     - name: Compile, Minify and Combine
+      if: "${{ inputs.compile == 'yes'  }}"
       uses: atticusseven/.github/actions/compile-minify-combine@main
       with:
         theme_dir: html/content/themes/${{ inputs.theme }}
