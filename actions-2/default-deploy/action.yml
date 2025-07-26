@@ -36,7 +36,6 @@ runs:
     - name: Remove unnecessary files
       run: | 
         rm wp-content/themes/${{inputs.wp-theme}}/composer.json
-        rm wp-content/themes/${{inputs.wp-theme}}/composer.lock
         rm wp-content/themes/${{inputs.wp-theme}}/package.json
         rm wp-content/themes/${{inputs.wp-theme}}/src/input.css 
       shell: bash
