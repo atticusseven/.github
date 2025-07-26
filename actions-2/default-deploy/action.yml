@@ -14,6 +14,12 @@ inputs:
   ssh-key:
     description: "SSH key to add"
     required: true
+  destination-path:
+    description: Path to public_html on the web server
+    required: true
+  wp-theme:
+    description: The directory name of the WordPress Theme
+    required: true
 runs:
   using: "composite"
   steps:
