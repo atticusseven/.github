@@ -20,13 +20,16 @@ inputs:
   wp-theme:
     description: The directory name of the WordPress Theme
     required: true
+  auth-json:
+    description: Contains authentication for paid plugins to be installed using composer
+    required: true
 runs:
   using: "composite"
   steps:
     - name: Git checkout
       uses: actions/checkout@v3
     - name: Add HTTP basic auth credentials
-      run: echo '${{ secrets.COMPOSER_AUTH_JSON }}' > $GITHUB_WORKSPACE/auth.json
+      run: echo '${{inputs.auth-json}}' > $GITHUB_WORKSPACE/auth.json
       shell: bash
     - name: Install composer dependencies
       uses: ramsey/composer-install@v3
