@@ -1,0 +1,22 @@
+name: Deploy to Dev
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - develop
+
+jobs:
+  set-up-env-variables-deploy:
+    name: Set up env variables and deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Run default deploy"
+        uses: atticusseven/.github/actions-2/default-deploy@main
+        with:
+          ssh-user: ${{vars.SSH_USER}}
+          ssh-port: ${{vars.SSH_PORT}}
+          ssh-host: ${{vars.SSH_HOST}}
+          ssh-key: ${{secrets.SSH_PRIVATE_KEY}}
+          destination-path: ~/www/dev.bexandben.com/public_html
+          wp-theme: aseven-bexandben

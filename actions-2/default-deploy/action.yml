@@ -1,0 +1,47 @@
+name: "Default Deploy"
+description: "Builds and Deploys to specified environment"
+inputs:
+  ssh-user:
+    description: "SSH user to use"
+    required: true
+  ssh-host:
+    description: "SSH host to use"
+    required: true
+  ssh-port:
+    description: "SSH port to use"
+    required: false
+    default: "22"
+  ssh-key:
+    description: "SSH key to add"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Git checkout
+      uses: actions/checkout@v3
+    - name: Add HTTP basic auth credentials
+      run: echo '${{ secrets.COMPOSER_AUTH_JSON }}' > $GITHUB_WORKSPACE/auth.json
+      shell: bash
+    - name: Install composer dependencies
+      uses: ramsey/composer-install@v3
+    - name: Remove unnecessary files
+      run: | 
+        rm wp-content/themes/${{inputs.wp-theme}}/composer.json
+        rm wp-content/themes/${{inputs.wp-theme}}/composer.lock
+        rm wp-content/themes/${{inputs.wp-theme}}/package.json
+        rm wp-content/themes/${{inputs.wp-theme}}/src/input.css 
+      shell: bash
+    - name: Add SSH Key to this runner
+      uses: atticusseven/.github/actions/add-ssh-key@main
+      with:
+        ssh-user: ${{ inputs.ssh-user }}
+        ssh-port: ${{ inputs.ssh-port }}
+        ssh-host: ${{ inputs.ssh-host }}
+        ssh-key: ${{ inputs.ssh-key }}
+    - name: Rsync to the remote
+      run: rsync -avPC --delete --no-perms --include-from='.rsyncinclude' --exclude-from='.rsyncignore' . server:${{inputs.destination-path}}
+      shell: bash
+    - run: |
+        wp cache flush --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}
+        wp rewrite flush --ssh=server:${{ inputs.destination-path }}
+      shell: bash
