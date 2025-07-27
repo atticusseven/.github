@@ -49,6 +49,13 @@ runs:
     - name: Rsync to the remote
       run: rsync -avPC --delete --no-perms --include-from='.rsyncinclude' --exclude-from='.rsyncignore' . server:${{inputs.destination-path}}
       shell: bash
+    - name: Install WP-CLI
+      run: |
+        curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+        chmod +x wp-cli.phar
+        sudo mv wp-cli.phar /usr/local/bin/wp
+        wp --info
+      shell: bash
     - run: |
         wp cache flush --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}
         wp rewrite flush --ssh=server:${{ inputs.destination-path }}
