@@ -49,8 +49,9 @@ runs:
     - name: Search / Replace production domain name with dev domain name
       run: wp search-replace "https://bexandben.com" "https://dev.bexandben.com" --all-tables --skip-tables=wp_users --ssh=server:${{ inputs.dev-path }}/public_html
       shell: bash
-    - name: Flush Cache and Rewrites / Discourage Search Engines
+    - name: Flush Cache and Rewrites / Discourage Search Engines / Activate Disable Emails
       run: |	
+        wp plugin activate disable-emails --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
         wp option update blog_public 0 --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
         wp cache flush --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
         wp rewrite flush --ssh=server:${{ inputs.dev-path }}/public_html
