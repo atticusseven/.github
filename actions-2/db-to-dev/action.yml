@@ -41,7 +41,7 @@ runs:
       run: wp db export ../production.sql --ssh=server:${{ inputs.production-path }}/public_html
       shell: bash
     - name: Import Production DB into Dev
-      run: wp db import {{ inputs.production-path }}/production.sql --ssh=server:${{ inputs.dev-path }}/public_html
+      run: wp db import ${{ inputs.production-path }}/production.sql --ssh=server:${{ inputs.dev-path }}/public_html
       shell: bash
     - name: Delete production.sql DB dump
       run: ssh server rm ${{ inputs.production-path }}/production.sql
