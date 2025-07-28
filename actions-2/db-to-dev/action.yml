@@ -51,6 +51,6 @@ runs:
       shell: bash
     - name: Flush Cache and Rewrites
       run: |
-        wp cache flush --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}
-        wp rewrite flush --ssh=server:${{ inputs.dev-path }}
+        wp cache flush --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
+        wp rewrite flush --ssh=server:${{ inputs.dev-path }}/public_html
       shell: bash
