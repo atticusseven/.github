@@ -1,0 +1,56 @@
+name: "DB to Dev"
+description: "Exports DB from the Production Site, imports it into dev and changes all references to the domain name"
+inputs:
+  ssh-user:
+    description: "SSH user to use"
+    required: true
+  ssh-host:
+    description: "SSH host to use"
+    required: true
+  ssh-port:
+    description: "SSH port to use"
+    required: false
+    default: "22"
+  ssh-key:
+    description: "SSH key to add"
+    required: true
+  production-path:
+    description: Path to one direction above public_html of the production site on the web server
+    required: true
+  dev-path:
+    description: Path to one direction above public_html of the dev site on the web server
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Add SSH Key to this runner
+      uses: atticusseven/.github/actions/add-ssh-key@main
+      with:
+        ssh-user: ${{ inputs.ssh-user }}
+        ssh-port: ${{ inputs.ssh-port }}
+        ssh-host: ${{ inputs.ssh-host }}
+        ssh-key: ${{ inputs.ssh-key }}
+    - name: Install WP-CLI
+      run: |
+        curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+        chmod +x wp-cli.phar
+        sudo mv wp-cli.phar /usr/local/bin/wp
+        wp --info
+      shell: bash
+    - name: Export Production DB
+      run: wp db export ../production.sql --ssh=server:${{ inputs.production-path }}/public_html
+      shell: bash
+    - name: Import Production DB into Dev
+      run: wp db import {{ inputs.production-path }}/production.sql --ssh=server:${{ inputs.dev-path }}/public_html
+      shell: bash
+    - name: Delete production.sql DB dump
+      run: ssh server rm ${{ inputs.production-path }}/production.sql
+      shell: bash
+    - name: Search / Replace production domain name with dev domain name
+      run: wp search-replace "https://bexandben.com" "https://dev.bexandben.com" --all-tables --skip-tables=wp_users --ssh=server:${{ inputs.dev-path }}/public_html
+      shell: bash
+    - name: Flush Cache and Rewrites
+      run: |
+        wp cache flush --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}
+        wp rewrite flush --ssh=server:${{ inputs.dev-path }}
+      shell: bash
