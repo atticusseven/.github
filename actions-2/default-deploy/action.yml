@@ -31,8 +31,12 @@ runs:
     - name: Add HTTP basic auth credentials
       run: echo '${{inputs.auth-json}}' > $GITHUB_WORKSPACE/auth.json
       shell: bash
-    - name: Install composer dependencies
+    - name: Install composer dependencies at root
       uses: ramsey/composer-install@v3
+    - name: Install composer dependencies in theme
+      uses: ramsey/composer-install@v3
+      with:
+        working-directory: "wp-content/themes/${{inputs.wp-theme}}"
     - name: Remove unnecessary files
       run: | 
         rm wp-content/themes/${{inputs.wp-theme}}/composer.json
