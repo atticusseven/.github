@@ -8,6 +8,11 @@ runs:
       uses: actions/setup-node@v3
       with:
         node-version: 20
+    - name: Install actions
+      run: |
+        npm i @actions/core
+        npm i @actions/github
+      shell: bash
     - name: Install PostCSS, PostCSS CLI and Autoprefixer
       run: npm i -D --global postcss postcss-cli autoprefixer
       shell: bash
