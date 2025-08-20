@@ -12,6 +12,7 @@ runs:
       run: |
         npm i @actions/core
         npm i @actions/github
+        ls -la
       shell: bash
     - name: Install PostCSS, PostCSS CLI and Autoprefixer
       run: npm i -D --global postcss postcss-cli autoprefixer
