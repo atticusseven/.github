@@ -28,8 +28,10 @@ runs:
   steps:
     - name: Git checkout
       uses: actions/checkout@v3
-    - name: Add HTTP basic auth credentials
-      run: echo '${{inputs.auth-json}}' > $GITHUB_WORKSPACE/auth.json
+    - name: Add HTTP basic auth credentials and .env file
+      run: |
+        echo '${{inputs.auth-json}}' > $GITHUB_WORKSPACE/auth.json
+        echo '${{inputs.dot-env}}' > $GITHUB_WORKSPACE/.env
       shell: bash
     - name: Install composer dependencies at root
       uses: ramsey/composer-install@v3
