@@ -41,8 +41,8 @@ runs:
         working-directory: "wp-content/themes/${{inputs.wp-theme}}"
     - name: Remove unnecessary files
       run: |
-        if [ "${{inputs.wp-theme}}" != "notheme" ]; then 
-          rm wp-content/themes/${{inputs.wp-theme}}/composer.json
+        rm wp-content/themes/${{inputs.wp-theme}}/composer.json
+        if [ "${{inputs.wp-theme}}" != "aseven-notheme" ]; then 
           rm wp-content/themes/${{inputs.wp-theme}}/package.json
           rm wp-content/themes/${{inputs.wp-theme}}/src/input.css
         fi 
