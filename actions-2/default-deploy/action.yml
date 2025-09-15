@@ -40,10 +40,12 @@ runs:
       with:
         working-directory: "wp-content/themes/${{inputs.wp-theme}}"
     - name: Remove unnecessary files
-      run: | 
-        rm wp-content/themes/${{inputs.wp-theme}}/composer.json
-        rm wp-content/themes/${{inputs.wp-theme}}/package.json
-        rm wp-content/themes/${{inputs.wp-theme}}/src/input.css 
+      run: |
+        if [ "${{inputs.wp-theme}}" != "notheme" ]; then 
+          rm wp-content/themes/${{inputs.wp-theme}}/composer.json
+          rm wp-content/themes/${{inputs.wp-theme}}/package.json
+          rm wp-content/themes/${{inputs.wp-theme}}/src/input.css
+        fi 
       shell: bash
     - name: Add SSH Key to this runner
       uses: atticusseven/.github/actions/add-ssh-key@main
