@@ -1,0 +1,36 @@
+name: "Uploads to Dev"
+description: "Synchronises uploads folder from Production to Dev"
+inputs:
+  ssh-user:
+    description: "SSH user to use"
+    required: true
+  ssh-host:
+    description: "SSH host to use"
+    required: true
+  ssh-port:
+    description: "SSH port to use"
+    required: false
+    default: "22"
+  ssh-key:
+    description: "SSH key to add"
+    required: true
+  production-path:
+    description: Path to one direction above public_html of the production site on the web server
+    required: true
+  dev-path:
+    description: Path to one direction above public_html of the dev site on the web server
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Add SSH Key to this runner
+      uses: atticusseven/.github/actions/add-ssh-key@main
+      with:
+        ssh-user: ${{ inputs.ssh-user }}
+        ssh-port: ${{ inputs.ssh-port }}
+        ssh-host: ${{ inputs.ssh-host }}
+        ssh-key: ${{ inputs.ssh-key }}
+    - name: Sync Uploads from Production to Dev
+      run: rsync -zr server:${{ inputs.production-path }}/public_html/wp-content/uploads ${{ inputs.dev-path }}/public_html/wp-content --delete
+      shell: bash
+    
