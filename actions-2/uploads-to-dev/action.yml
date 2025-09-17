@@ -31,6 +31,6 @@ runs:
         ssh-host: ${{ inputs.ssh-host }}
         ssh-key: ${{ inputs.ssh-key }}
     - name: Sync Uploads from Production to Dev
-      run: rsync -zr server:${{ inputs.production-path }}/public_html/wp-content/uploads ${{ inputs.dev-path }}/public_html/wp-content --delete
+      run: rsync -zr server:${{ inputs.production-path }}/public_html/wp-content/uploads server:${{ inputs.dev-path }}/public_html/wp-content --delete
       shell: bash
     
