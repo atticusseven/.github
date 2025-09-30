@@ -70,14 +70,14 @@ runs:
       shell: bash
     - name: Activate production plugins
       if: "${{ inputs.env == 'production' }}"
-      run: wp plugin activate --exclude=password-protected,disable-emails --all --ssh=server:${{ inputs.destination-path }}
+      run: wp plugin activate --exclude=password-protected,disable-emails --all  --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}
       shell: bash
     - name: Activate dev/staging plugins
       if: "${{ inputs.env == 'dev' || inputs.env == 'staging' }}"
-      run: wp plugin activate --exclude=updraftplus --all --ssh=server:${{ inputs.destination-path }}
+      run: wp plugin activate --exclude=updraftplus --all  --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}
       shell: bash
     - name: Update Database
-      run: wp core update-db --ssh=server:${{ inputs.destination-path }}
+      run: wp core update-db  --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}
       shell: bash
     - name: Flush Cache and Rewrites
       run: |

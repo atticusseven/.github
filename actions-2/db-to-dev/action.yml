@@ -38,16 +38,16 @@ runs:
         wp --info
       shell: bash
     - name: Export Production DB
-      run: wp db export ../production.sql --ssh=server:${{ inputs.production-path }}/public_html
+      run: wp db export ../production.sql  --skip-plugins --skip-themes --ssh=server:${{ inputs.production-path }}/public_html
       shell: bash
     - name: Import Production DB into Dev
-      run: wp db import ${{ inputs.production-path }}/production.sql --ssh=server:${{ inputs.dev-path }}/public_html
+      run: wp db import ${{ inputs.production-path }}/production.sql  --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
       shell: bash
     - name: Delete production.sql DB dump
       run: ssh server rm ${{ inputs.production-path }}/production.sql
       shell: bash
     - name: Search / Replace production domain name with dev domain name
-      run: wp search-replace "https://bexandben.com" "https://dev.bexandben.com" --all-tables --skip-tables=wp_users --ssh=server:${{ inputs.dev-path }}/public_html
+      run: wp search-replace "https://bexandben.com" "https://dev.bexandben.com" --all-tables  --skip-plugins --skip-themes --skip-tables=wp_users --ssh=server:${{ inputs.dev-path }}/public_html
       shell: bash
     - name: Flush Cache and Rewrites / Discourage Search Engines / Activate Disable Emails
       run: |	
@@ -55,5 +55,5 @@ runs:
         wp plugin deactivate updraftplus --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
         wp option update blog_public 0 --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
         wp cache flush --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
-        wp rewrite flush --ssh=server:${{ inputs.dev-path }}/public_html
+        wp rewrite flush  --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
       shell: bash
