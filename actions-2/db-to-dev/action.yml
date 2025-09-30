@@ -53,7 +53,7 @@ runs:
       run: ssh server rm ${{ inputs.production-path }}/production.sql
       shell: bash
     - name: Update Database
-      run: wp core update-db  --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}/public_html
+      run: wp core update-db  --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
       shell: bash
     - name: Search / Replace production domain name with dev domain name
       run: wp search-replace "${{ inputs.production-url }}" "${{ inputs.dev-url }}" --all-tables  --skip-plugins --skip-themes --skip-tables=wp_users --ssh=server:${{ inputs.dev-path }}/public_html
