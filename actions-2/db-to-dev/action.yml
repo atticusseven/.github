@@ -51,7 +51,8 @@ runs:
       shell: bash
     - name: Flush Cache and Rewrites / Discourage Search Engines / Activate Disable Emails
       run: |	
-        wp plugin activate disable-emails --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
+        wp plugin activate disable-emails password-protected --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
+        wp plugin deactivate updraftplus --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
         wp option update blog_public 0 --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
         wp cache flush --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
         wp rewrite flush --ssh=server:${{ inputs.dev-path }}/public_html
