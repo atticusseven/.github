@@ -20,6 +20,12 @@ inputs:
   dev-path:
     description: Path to one direction above public_html of the dev site on the web server
     required: true
+  production-url:
+    description: The URL of the production site
+    required: true
+  dev-url:
+    description: The URL of the dev site
+    required: true
 runs:
   using: "composite"
   steps:
@@ -47,7 +53,7 @@ runs:
       run: ssh server rm ${{ inputs.production-path }}/production.sql
       shell: bash
     - name: Search / Replace production domain name with dev domain name
-      run: wp search-replace "https://bexandben.com" "https://dev.bexandben.com" --all-tables  --skip-plugins --skip-themes --skip-tables=wp_users --ssh=server:${{ inputs.dev-path }}/public_html
+      run: wp search-replace "${{ inputs.production-url }}" "${{ inputs.dev-url }}" --all-tables  --skip-plugins --skip-themes --skip-tables=wp_users --ssh=server:${{ inputs.dev-path }}/public_html
       shell: bash
     - name: Flush Cache and Rewrites / Discourage Search Engines / Activate Disable Emails
       run: |	
