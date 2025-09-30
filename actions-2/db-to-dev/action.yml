@@ -52,6 +52,9 @@ runs:
     - name: Delete production.sql DB dump
       run: ssh server rm ${{ inputs.production-path }}/production.sql
       shell: bash
+    - name: Update Database
+      run: wp core update-db  --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}/public_html
+      shell: bash
     - name: Search / Replace production domain name with dev domain name
       run: wp search-replace "${{ inputs.production-url }}" "${{ inputs.dev-url }}" --all-tables  --skip-plugins --skip-themes --skip-tables=wp_users --ssh=server:${{ inputs.dev-path }}/public_html
       shell: bash
@@ -61,5 +64,6 @@ runs:
         wp plugin deactivate updraftplus --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
         wp option update blog_public 0 --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
         wp cache flush --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
+        wp sg purge --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}/public_html
         wp rewrite flush  --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
       shell: bash
