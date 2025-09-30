@@ -82,6 +82,6 @@ runs:
     - name: Flush Cache and Rewrites
       run: |
         wp cache flush --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}
-        wp sg purge --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}
+        wp sg purge --skip-themes --ssh=server:${{ inputs.destination-path }}
         wp rewrite flush --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}
       shell: bash
