@@ -64,6 +64,6 @@ runs:
         wp plugin deactivate updraftplus --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
         wp option update blog_public 0 --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
         wp cache flush --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
-        wp sg purge --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
+        wp sg purge --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
         wp rewrite flush  --skip-plugins --skip-themes --ssh=server:${{ inputs.dev-path }}/public_html
       shell: bash
