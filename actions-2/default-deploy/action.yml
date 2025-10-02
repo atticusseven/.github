@@ -47,8 +47,8 @@ runs:
       run: |
         rm wp-content/themes/${{inputs.wp-theme}}/composer.json
         if [ "${{inputs.wp-theme}}" != "aseven-notheme" ]; then 
-          rm wp-content/themes/${{inputs.wp-theme}}/package.json
-          rm wp-content/themes/${{inputs.wp-theme}}/src/input.css
+          rm -f wp-content/themes/${{inputs.wp-theme}}/package.json
+          rm -f wp-content/themes/${{inputs.wp-theme}}/src/input.css
         fi 
       shell: bash
     - name: Add SSH Key to this runner
