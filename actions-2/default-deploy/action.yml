@@ -39,9 +39,12 @@ runs:
       shell: bash
     - name: Install composer dependencies at root
       uses: ramsey/composer-install@v3
+      with:
+        composer-options: "--no-dev --optimize-autoloader"
     - name: Install composer dependencies in theme
       uses: ramsey/composer-install@v3
       with:
+        composer-options: "--no-dev --optimize-autoloader"
         working-directory: "wp-content/themes/${{inputs.wp-theme}}"
     - name: Remove unnecessary files
       run: |
