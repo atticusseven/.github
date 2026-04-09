@@ -1,7 +1,8 @@
 name: "Default Deploy"
 description: "Builds and Deploys to specified environment"
+
 inputs:
-  env:  
+  env:
     description: "The environment to deploy to"
     required: true
     default: "production"
@@ -19,72 +20,105 @@ inputs:
     description: "SSH key to add"
     required: true
   destination-path:
-    description: Path to public_html on the web server
+    description: "Path to public_html on the web server"
     required: true
   wp-theme:
-    description: The directory name of the WordPress Theme
+    description: "The directory name of the WordPress Theme"
     required: true
   auth-json:
-    description: Contains authentication for paid plugins to be installed using composer
+    description: "Contains authentication for paid plugins to be installed using composer"
     required: true
+  dot-env:
+    description: ".env contents"
+    required: false
+    default: ""
+
 runs:
   using: "composite"
   steps:
     - name: Git checkout
-      uses: actions/checkout@v3
-    - name: Add HTTP basic auth credentials and .env file
-      run: |
-        echo '${{inputs.auth-json}}' > $GITHUB_WORKSPACE/auth.json
-        echo '${{inputs.dot-env}}' > $GITHUB_WORKSPACE/.env
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: "8.3"
+        tools: composer:v2
+
+    - name: Add auth.json and .env
       shell: bash
+      run: |
+        printf '%s' '${{ inputs.auth-json }}' > "$GITHUB_WORKSPACE/auth.json"
+        printf '%s' '${{ inputs.dot-env }}' > "$GITHUB_WORKSPACE/.env"
+
+    - name: Diagnose Composer
+      shell: bash
+      run: |
+        composer --version
+        composer diagnose || true
+
     - name: Install composer dependencies at root
       uses: ramsey/composer-install@v3
       with:
-        composer-options: "--no-dev --optimize-autoloader"
+        composer-options: "--no-dev --optimize-autoloader --no-interaction --no-progress"
+
     - name: Install composer dependencies in theme
       uses: ramsey/composer-install@v3
       with:
-        composer-options: "--no-dev --optimize-autoloader"
-        working-directory: "wp-content/themes/${{inputs.wp-theme}}"
+        composer-options: "--no-dev --optimize-autoloader --no-interaction --no-progress"
+        working-directory: "wp-content/themes/${{ inputs.wp-theme }}"
+
     - name: Remove unnecessary files
-      run: |
-        rm wp-content/themes/${{inputs.wp-theme}}/composer.json
-        if [ "${{inputs.wp-theme}}" != "aseven-notheme" ]; then 
-          rm -f wp-content/themes/${{inputs.wp-theme}}/package.json
-          rm -f wp-content/themes/${{inputs.wp-theme}}/src/input.css
-        fi 
       shell: bash
-    - name: Add SSH Key to this runner
+      run: |
+        rm -f "wp-content/themes/${{ inputs.wp-theme }}/composer.json"
+        if [ "${{ inputs.wp-theme }}" != "aseven-notheme" ]; then
+          rm -f "wp-content/themes/${{ inputs.wp-theme }}/package.json"
+          rm -f "wp-content/themes/${{ inputs.wp-theme }}/src/input.css"
+        fi
+
+    - name: Add SSH key to this runner
       uses: atticusseven/.github/actions/add-ssh-key@main
       with:
         ssh-user: ${{ inputs.ssh-user }}
         ssh-port: ${{ inputs.ssh-port }}
         ssh-host: ${{ inputs.ssh-host }}
         ssh-key: ${{ inputs.ssh-key }}
-    - name: Rsync to the remote
-      run: rsync -avPC --delete --no-perms --include-from='.rsyncinclude' --exclude-from='.rsyncignore' . server:${{inputs.destination-path}}
+
+    - name: Rsync to remote
       shell: bash
+      run: |
+        rsync -avPC --delete --no-perms \
+          --include-from='.rsyncinclude' \
+          --exclude-from='.rsyncignore' \
+          . "server:${{ inputs.destination-path }}"
+
     - name: Install WP-CLI
+      shell: bash
       run: |
         curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
         chmod +x wp-cli.phar
         sudo mv wp-cli.phar /usr/local/bin/wp
         wp --info
-      shell: bash
+
     - name: Activate production plugins
-      if: "${{ inputs.env == 'production' }}"
-      run: wp plugin activate --exclude=password-protected,disable-emails --all  --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}
+      if: ${{ inputs.env == 'production' }}
       shell: bash
+      run: |
+        wp plugin activate --exclude=password-protected,disable-emails --all \
+          --skip-plugins --skip-themes \
+          --ssh="server:${{ inputs.destination-path }}"
+
     - name: Activate dev/staging plugins
-      if: "${{ inputs.env == 'dev' || inputs.env == 'staging' }}"
-      run: wp plugin activate --exclude=updraftplus --all  --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}
+      if: ${{ inputs.env == 'dev' || inputs.env == 'staging' }}
       shell: bash
-    - name: Update Database
-      run: wp core update-db  --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}
+      run: |
+        wp plugin activate --exclude=updraftplus --all \
+          --skip-plugins --skip-themes \
+          --ssh="server:${{ inputs.destination-path }}"
+
+    - name: Update database
       shell: bash
-#    - name: Flush Cache and Rewrites
-#      run: |
-#        wp cache flush --skip-plugins --skip-themes --ssh=server:${{ inputs.destination-path }}
-#        wp sg purge --skip-themes --ssh=server:${{ inputs.destination-path }}
-#        wp rewrite flush --ssh=server:${{ inputs.destination-path }}
-#      shell: bash
+      run: |
+        wp core update-db --skip-plugins --skip-themes \
+          --ssh="server:${{ inputs.destination-path }}"
