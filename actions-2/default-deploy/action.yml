@@ -122,3 +122,9 @@ runs:
       run: |
         wp core update-db --skip-plugins --skip-themes \
           --ssh="server:${{ inputs.destination-path }}"
+
+    - name: Flush rewrite rules
+      shell: bash
+      run: |
+        wp rewrite flush --skip-plugins --skip-themes \
+          --ssh="server:${{ inputs.destination-path }}"
