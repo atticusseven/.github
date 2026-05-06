@@ -130,7 +130,7 @@ runs:
           --skip-plugins --skip-themes \
           --ssh="server:${{ inputs.destination-path }}"; then
           wp sg purge \
-            --skip-plugins --skip-themes \
+            --skip-themes \
             --ssh="server:${{ inputs.destination-path }}"
         fi
 
