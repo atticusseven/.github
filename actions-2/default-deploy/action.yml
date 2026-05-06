@@ -123,6 +123,17 @@ runs:
         wp core update-db --skip-plugins --skip-themes \
           --ssh="server:${{ inputs.destination-path }}"
 
+    - name: Purge SG cache
+      shell: bash
+      run: |
+        if wp plugin is-active sg-cachepress \
+          --skip-plugins --skip-themes \
+          --ssh="server:${{ inputs.destination-path }}"; then
+          wp sg purge \
+            --skip-plugins --skip-themes \
+            --ssh="server:${{ inputs.destination-path }}"
+        fi
+
     - name: Flush rewrite rules
       shell: bash
       run: |
