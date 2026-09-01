@@ -142,5 +142,5 @@ runs:
       shell: bash
       run: |
         wp rewrite flush \
-          --skip-themes \
+          --skip-plugins --skip-themes \
           --ssh="server:${{ inputs.destination-path }}"
