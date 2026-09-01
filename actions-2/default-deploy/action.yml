@@ -129,9 +129,13 @@ runs:
         if wp plugin is-active sg-cachepress \
           --skip-plugins --skip-themes \
           --ssh="server:${{ inputs.destination-path }}"; then
-          wp sg purge \
-            --skip-themes \
-            --ssh="server:${{ inputs.destination-path }}"
+          if wp sg status dynamic-cache \
+            --skip-plugins --skip-themes \
+            --ssh="server:${{ inputs.destination-path }}"; then
+            wp sg purge \
+              --skip-themes \
+              --ssh="server:${{ inputs.destination-path }}"
+          fi
         fi
 
     - name: Flush rewrite rules
